@@ -4,4 +4,4 @@
 - Mateusz Gren, 1025504, e1025504@student.tuwien.ac.at
 
 ### Presentations
-- [Presentation 1](https://docs.google.com/presentation/d/1yAuGdO8zSd3Ex_Q27z3QCtkrzsLpXrxqwKq1Ie2blgQ/edit?usp=sharing)
+- [Presentation 1](https://github.com/mathck/e-commerce/blob/master/Pr%C3%A4sentationen/E-Commerce%20PPT1.pdf)
