@@ -1,4 +1,4 @@
 package model.exceptions;
 
-public abstract class Failure extends Exception {
+abstract class Failure extends Exception {
 }
