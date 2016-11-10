@@ -12,6 +12,7 @@ public class RandomNumber {
     }
 
     public static int nextGaussian(int mean) {
-        return (int) Math.round(new Random().nextGaussian() * standardDeviation + mean);
+        return (int) Math.round(
+                ThreadLocalRandom.current().nextGaussian() * standardDeviation + mean);
     }
 }
