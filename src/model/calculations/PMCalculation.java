@@ -19,8 +19,8 @@ public class PMCalculation {
      */
     public static double networkConnection(PhysicalMachine physicalMachineSource, PhysicalMachine physicalMachineTarget) {
         return  basicEnergyUtilization +
-                physicalMachineSource.getEnergyUtilization() +
-                physicalMachineTarget.getEnergyUtilization();
+                physicalMachineSource.getUtilTotal() +
+                physicalMachineTarget.getUtilTotal();
     }
 
     /**
