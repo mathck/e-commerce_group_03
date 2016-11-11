@@ -15,10 +15,10 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("../views/main.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("../views/GUI.fxml"));
         primaryStage.getIcons().add(Assets.applicationIcon());
         primaryStage.setTitle("Extended Task Resubmission");
-        primaryStage.setScene(new Scene(root, 300, 275));
+        primaryStage.setScene(new Scene(root, 600, 600));
         primaryStage.show();
 
         initInfrastructure();
