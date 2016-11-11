@@ -18,7 +18,7 @@ public class Main extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("../views/GUI.fxml"));
         primaryStage.getIcons().add(Assets.applicationIcon());
         primaryStage.setTitle("Extended Task Resubmission");
-        primaryStage.setScene(new Scene(root, 600, 600));
+        primaryStage.setScene(new Scene(root, 600, 700));
         primaryStage.show();
 
         initInfrastructure();

@@ -7,7 +7,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.UIController">
+<BorderPane maxWidth="-Infinity" minWidth="-Infinity" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.UIController">
    <bottom>
       <GridPane BorderPane.alignment="CENTER">
         <columnConstraints>
@@ -22,7 +22,7 @@
          <children>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <children>
-                  <Button onAction="#handleStartButtonExtensionAction" alignment="CENTER" contentDisplay="TOP" mnemonicParsing="false" text="Start">
+                  <Button alignment="CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#handleStartButtonExtensionAction" text="Start">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
@@ -30,7 +30,7 @@
                         <Insets bottom="10.0" left="25.0" right="25.0" top="10.0" />
                      </padding>
                   </Button>
-                  <Button onAction="#handleStopButtonExtensionAction" mnemonicParsing="false" text="Stop">
+                  <Button mnemonicParsing="false" onAction="#handleStopButtonExtensionAction" text="Stop">
                      <HBox.margin>
                         <Insets left="20.0" />
                      </HBox.margin>
@@ -38,7 +38,7 @@
                         <Insets bottom="10.0" left="25.0" right="25.0" top="10.0" />
                      </padding>
                   </Button>
-                  <Button onAction="#handleResetButtonExtensionAction" mnemonicParsing="false" text="Reset">
+                  <Button mnemonicParsing="false" onAction="#handleResetButtonExtensionAction" text="Reset">
                      <HBox.margin>
                         <Insets left="20.0" />
                      </HBox.margin>
@@ -50,7 +50,7 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="1">
                <children>
-                  <Button onAction="#handleStartButtonBaselineAction" alignment="CENTER" contentDisplay="TOP" defaultButton="true" mnemonicParsing="false" text="Start">
+                  <Button alignment="CENTER" contentDisplay="TOP" defaultButton="true" mnemonicParsing="false" onAction="#handleStartButtonBaselineAction" text="Start">
                      <padding>
                         <Insets bottom="10.0" left="25.0" right="25.0" top="10.0" />
                      </padding>
@@ -58,7 +58,7 @@
                         <Insets />
                      </HBox.margin>
                   </Button>
-                  <Button onAction="#handleStopButtonBaselineAction" mnemonicParsing="false" text="Stop">
+                  <Button mnemonicParsing="false" onAction="#handleStopButtonBaselineAction" text="Stop">
                      <padding>
                         <Insets bottom="10.0" left="25.0" right="25.0" top="10.0" />
                      </padding>
@@ -66,7 +66,7 @@
                         <Insets left="20.0" />
                      </HBox.margin>
                   </Button>
-                  <Button onAction="#handleResetButtonBaselineAction" mnemonicParsing="false" text="Reset">
+                  <Button mnemonicParsing="false" onAction="#handleResetButtonBaselineAction" text="Reset">
                      <padding>
                         <Insets bottom="10.0" left="25.0" right="25.0" top="10.0" />
                      </padding>
@@ -78,7 +78,7 @@
             </HBox>
             <Pane prefHeight="200.0" prefWidth="200.0">
                <children>
-                  <Text layoutX="127.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Baseline Algorithm">
+                  <Text layoutX="92.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Baseline Algorithm">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -93,7 +93,7 @@
             </Pane>
             <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
                <children>
-                  <Text layoutX="124.0" layoutY="19.0" strokeType="INSIDE" strokeWidth="0.0" text="Extended Algorithm">
+                  <Text layoutX="89.0" layoutY="19.0" strokeType="INSIDE" strokeWidth="0.0" text="Extended Algorithm">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -107,21 +107,21 @@
       </GridPane>
    </bottom>
    <center>
-      <VBox maxHeight="-Infinity" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="250.0" prefWidth="500.0" spacing="15.0">
+      <VBox maxHeight="-Infinity" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="500.0" spacing="15.0">
          <children>
-            <LineChart maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" prefHeight="250.0" title="Completed Tasks">
+            <LineChart fx:id="lineChart" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" prefHeight="250.0" title="Completed Tasks">
               <xAxis>
-                <CategoryAxis side="BOTTOM" />
+                 <NumberAxis />
               </xAxis>
               <yAxis>
-                <NumberAxis side="LEFT" />
+                 <NumberAxis />
               </yAxis>
             </LineChart>
             <Line endX="400.0" startX="-100.0" />
-            <HBox prefHeight="100.0" prefWidth="200.0">
+            <HBox minHeight="-Infinity" prefHeight="250.0" prefWidth="200.0">
                <children>
-                  <PieChart fx:id="baselinePieChart" title="Baseline Performance" />
-                  <PieChart fx:id="extensionPieChart" title="Extension Performance" />
+                  <PieChart fx:id="baselinePieChart" labelLineLength="10.0" labelsVisible="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="250.0" minWidth="250.0" prefHeight="250.0" prefWidth="250.0" startAngle="90.0" title="Baseline Performance" />
+                  <PieChart fx:id="extensionPieChart" labelLineLength="10.0" labelsVisible="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="250.0" minWidth="250.0" prefHeight="250.0" prefWidth="250.0" startAngle="90.0" title="Extension Performance" />
                </children>
             </HBox>
             <Line endX="400.0" startX="-100.0" />
