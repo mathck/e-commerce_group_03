@@ -19,6 +19,7 @@ public class Main extends Application {
         primaryStage.getIcons().add(Assets.applicationIcon());
         primaryStage.setTitle("Extended Task Resubmission");
         primaryStage.setScene(new Scene(root, 600, 700));
+        primaryStage.setResizable(false);
         primaryStage.show();
 
         initInfrastructure();

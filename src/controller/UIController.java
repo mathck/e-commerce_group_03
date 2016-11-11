@@ -1,8 +1,5 @@
 package controller;
 
-/**
- * Created by Michael on 11.11.2016.
- */
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -11,7 +8,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.LineChart;
-import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
 
@@ -50,7 +46,7 @@ public class UIController implements Initializable {
                         new PieChart.Data("Success, 80%", 80),
                         new PieChart.Data("Fail, 20%", 20));
 
-        extensionSeries.setName("Baseline");
+        extensionSeries.setName("Extension");
         extensionSeries.getData().add(new XYChart.Data(0, 0));
         extensionSeries.getData().add(new XYChart.Data(1, 25));
         extensionSeries.getData().add(new XYChart.Data(2, 45));

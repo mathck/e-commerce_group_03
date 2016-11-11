@@ -15,10 +15,9 @@ class DataCenter implements INode {
     DataCenter(int numberOfPhysicalMachines) {
         physicalMachines = new ArrayList<>(numberOfPhysicalMachines);
 
-        for(int i = 0; i< physicalMachines.size(); i++){
-            utilTotal += physicalMachines.get(i).getUtilTotal();
+        for (PhysicalMachine physicalMachine : physicalMachines) {
+            utilTotal += physicalMachine.getUtilTotal();
         }
-
     }
 
     @Override
