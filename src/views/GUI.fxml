@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.chart.*?>
@@ -7,7 +8,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxWidth="-Infinity" minWidth="-Infinity" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.UIController">
+<BorderPane maxWidth="-Infinity" minWidth="-Infinity" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.UIController">
    <bottom>
       <GridPane BorderPane.alignment="CENTER">
         <columnConstraints>
@@ -78,7 +79,7 @@
             </HBox>
             <Pane prefHeight="200.0" prefWidth="200.0">
                <children>
-                  <Text layoutX="92.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Baseline Algorithm">
+                  <Text layoutX="192.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Baseline Algorithm">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -93,7 +94,7 @@
             </Pane>
             <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
                <children>
-                  <Text layoutX="89.0" layoutY="19.0" strokeType="INSIDE" strokeWidth="0.0" text="Extended Algorithm">
+                  <Text layoutX="189.0" layoutY="19.0" strokeType="INSIDE" strokeWidth="0.0" text="Extended Algorithm">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -103,6 +104,7 @@
                   <Insets bottom="50.0" />
                </padding>
             </Pane>
+            <HBox prefHeight="100.0" prefWidth="200.0" />
          </children>
       </GridPane>
    </bottom>
@@ -124,11 +126,27 @@
                   <PieChart fx:id="extensionPieChart" labelLineLength="10.0" labelsVisible="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="250.0" minWidth="250.0" prefHeight="250.0" prefWidth="250.0" startAngle="90.0" title="Extension Performance" />
                </children>
             </HBox>
-            <Line endX="400.0" startX="-100.0" />
          </children>
          <BorderPane.margin>
             <Insets bottom="20.0" top="20.0" />
          </BorderPane.margin>
       </VBox>
    </center>
+   <right>
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+         <children>
+            <BubbleChart fx:id="bubbleChart" horizontalZeroLineVisible="false" legendVisible="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="400.0" verticalZeroLineVisible="false">
+              <xAxis>
+                <NumberAxis side="BOTTOM" />
+              </xAxis>
+              <yAxis>
+                <NumberAxis side="LEFT" />
+              </yAxis>
+               <VBox.margin>
+                  <Insets left="20.0" right="20.0" />
+               </VBox.margin>
+            </BubbleChart>
+         </children>
+      </VBox>
+   </right>
 </BorderPane>

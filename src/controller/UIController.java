@@ -7,6 +7,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.chart.BubbleChart;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
@@ -19,23 +20,31 @@ public class UIController implements Initializable {
     private PieChart extensionPieChart;
     @FXML
     private LineChart lineChart;
+    @FXML
+    private BubbleChart bubbleChart;
 
-    private final XYChart.Series baselineSeries = new XYChart.Series();
-    private final XYChart.Series extensionSeries = new XYChart.Series();
+    private XYChart.Series baselineLineChart = new XYChart.Series();
+    private XYChart.Series extensionLineChart = new XYChart.Series();
+    private XYChart.Series bubbleChartGrid = new XYChart.Series();
 
     @FXML
-    private void handleStartButtonBaselineAction(ActionEvent event) {
+    private void handleStartButtonBaselineAction(ActionEvent event) throws InterruptedException {
         ObservableList<PieChart.Data> pieChartData =
                 FXCollections.observableArrayList(
                         new PieChart.Data("Success, 60%", 60),
                         new PieChart.Data("Fail, 40%", 40));
 
-        baselineSeries.setName("Baseline");
-        baselineSeries.getData().add(new XYChart.Data(0, 0));
-        baselineSeries.getData().add(new XYChart.Data(1, 14));
-        baselineSeries.getData().add(new XYChart.Data(2, 15));
+        baselineLineChart.setName("Baseline");
+        baselineLineChart.getData().add(new XYChart.Data(0, 0));
+        baselineLineChart.getData().add(new XYChart.Data(1, 14));
+        baselineLineChart.getData().add(new XYChart.Data(2, 15));
 
-        lineChart.getData().add(baselineSeries);
+        bubbleChartGrid.getData().add(new XYChart.Data(1, 2, 0.1));
+        bubbleChartGrid.getData().add(new XYChart.Data(2, 1, 0.15));
+
+        bubbleChart.getData().add(bubbleChartGrid);
+
+        lineChart.getData().add(baselineLineChart);
         baselinePieChart.setData(pieChartData);
     }
 
@@ -46,12 +55,18 @@ public class UIController implements Initializable {
                         new PieChart.Data("Success, 80%", 80),
                         new PieChart.Data("Fail, 20%", 20));
 
-        extensionSeries.setName("Extension");
-        extensionSeries.getData().add(new XYChart.Data(0, 0));
-        extensionSeries.getData().add(new XYChart.Data(1, 25));
-        extensionSeries.getData().add(new XYChart.Data(2, 45));
+        extensionLineChart.setName("Extension");
+        extensionLineChart.getData().add(new XYChart.Data(0, 0));
+        extensionLineChart.getData().add(new XYChart.Data(1, 25));
+        extensionLineChart.getData().add(new XYChart.Data(2, 45));
 
-        lineChart.getData().add(extensionSeries);
+        bubbleChartGrid.getData().add(new XYChart.Data(1, 1, 1));
+        bubbleChartGrid.getData().add(new XYChart.Data(1, 2, 2));
+        bubbleChartGrid.getData().add(new XYChart.Data(2, 1, 2));
+        bubbleChartGrid.getData().add(new XYChart.Data(5, 5, 5));
+
+        bubbleChart.getData().add(bubbleChartGrid);
+        lineChart.getData().add(extensionLineChart);
         extensionPieChart.setData(pieChartData);
     }
 
@@ -60,7 +75,7 @@ public class UIController implements Initializable {
         ObservableList<PieChart.Data> pieChartData =
                 FXCollections.observableArrayList();
 
-        lineChart.getData().removeAll(baselineSeries);
+        lineChart.getData().removeAll(baselineLineChart);
         baselinePieChart.setData(pieChartData);
     }
 
@@ -69,7 +84,7 @@ public class UIController implements Initializable {
         ObservableList<PieChart.Data> pieChartData =
                 FXCollections.observableArrayList();
 
-        lineChart.getData().removeAll(extensionSeries);
+        lineChart.getData().removeAll(extensionLineChart);
         extensionPieChart.setData(pieChartData);
     }
 
