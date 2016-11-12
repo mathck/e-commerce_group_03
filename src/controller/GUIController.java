@@ -7,12 +7,14 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.chart.BubbleChart;
-import javafx.scene.chart.LineChart;
-import javafx.scene.chart.PieChart;
-import javafx.scene.chart.XYChart;
+import javafx.scene.chart.*;
+import model.implementations.DataCenter;
+import model.implementations.Grid;
+import model.interfaces.INode;
+import model.utility.MatrixCalculator;
+import model.utility.RandomNumber;
 
-public class UIController implements Initializable {
+public class GUIController implements Initializable {
 
     @FXML
     private PieChart baselinePieChart;
@@ -27,6 +29,43 @@ public class UIController implements Initializable {
     private XYChart.Series extensionLineChart = new XYChart.Series();
     private XYChart.Series bubbleChartGrid = new XYChart.Series();
 
+    public void DrawGrid(Grid grid) {
+
+        INode[][] nodes = grid.getNodes().clone();
+        MatrixCalculator.rotateInPlace90DegreesClockwise(nodes);
+
+        int dimension = nodes[0].length;
+
+        for (int row = 0; row < dimension; row++)
+            for (int col = 0; col < dimension; col++)
+                if(nodes[row][col] instanceof DataCenter)
+                    bubbleChartGrid.getData().add(new XYChart.Data(row, col, 0.25));
+
+        bubbleChart.getData().add(bubbleChartGrid);
+
+        NumberAxis xAxis = (NumberAxis) bubbleChartGrid.getChart().getXAxis();
+        NumberAxis yAxis = (NumberAxis) bubbleChartGrid.getChart().getYAxis();
+
+        xAxis.setTickLabelsVisible(false);
+        yAxis.setTickLabelsVisible(false);
+    }
+
+    private int counter = 0;
+
+    public void AddDataPoint() {
+        try {
+            baselineLineChart.getData().add(new XYChart.Data(counter, RandomNumber.nextInt(0, 10)));
+            extensionLineChart.getData().add(new XYChart.Data(counter, RandomNumber.nextInt(0, 10)));
+            counter++;
+        }
+        catch (Exception e) {
+            // THIS HACK "to demonstrate live data addition"
+            // sometimes runs into concurrency failures
+
+            // IGNORE this bug, as this wont be our solution
+        }
+    }
+
     @FXML
     private void handleStartButtonBaselineAction(ActionEvent event) throws InterruptedException {
         ObservableList<PieChart.Data> pieChartData =
@@ -34,18 +73,10 @@ public class UIController implements Initializable {
                         new PieChart.Data("Success, 60%", 60),
                         new PieChart.Data("Fail, 40%", 40));
 
-        baselineLineChart.setName("Baseline");
-        baselineLineChart.getData().add(new XYChart.Data(0, 0));
-        baselineLineChart.getData().add(new XYChart.Data(1, 14));
-        baselineLineChart.getData().add(new XYChart.Data(2, 15));
-
-        bubbleChartGrid.getData().add(new XYChart.Data(1, 2, 0.1));
-        bubbleChartGrid.getData().add(new XYChart.Data(2, 1, 0.15));
-
-        bubbleChart.getData().add(bubbleChartGrid);
-
-        lineChart.getData().add(baselineLineChart);
         baselinePieChart.setData(pieChartData);
+
+        baselineLineChart.setName("Baseline");
+        lineChart.getData().add(baselineLineChart);
     }
 
     @FXML
@@ -55,19 +86,10 @@ public class UIController implements Initializable {
                         new PieChart.Data("Success, 80%", 80),
                         new PieChart.Data("Fail, 20%", 20));
 
-        extensionLineChart.setName("Extension");
-        extensionLineChart.getData().add(new XYChart.Data(0, 0));
-        extensionLineChart.getData().add(new XYChart.Data(1, 25));
-        extensionLineChart.getData().add(new XYChart.Data(2, 45));
-
-        bubbleChartGrid.getData().add(new XYChart.Data(1, 1, 1));
-        bubbleChartGrid.getData().add(new XYChart.Data(1, 2, 2));
-        bubbleChartGrid.getData().add(new XYChart.Data(2, 1, 2));
-        bubbleChartGrid.getData().add(new XYChart.Data(5, 5, 5));
-
-        bubbleChart.getData().add(bubbleChartGrid);
-        lineChart.getData().add(extensionLineChart);
         extensionPieChart.setData(pieChartData);
+
+        extensionLineChart.setName("Extension");
+        lineChart.getData().add(extensionLineChart);
     }
 
     @FXML

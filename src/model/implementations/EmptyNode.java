@@ -2,7 +2,7 @@ package model.implementations;
 
 import model.interfaces.INode;
 
-class EmptyNode implements INode {
+public class EmptyNode implements INode {
 
     @Override
     public String toString() {

@@ -5,7 +5,7 @@ import model.interfaces.INode;
 import java.util.ArrayList;
 import java.util.List;
 
-class DataCenter implements INode {
+public class DataCenter implements INode {
 
     private List<PhysicalMachine> physicalMachines;
     private int[][] locationInGrid;
