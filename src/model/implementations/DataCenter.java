@@ -9,7 +9,9 @@ import java.util.List;
 public class DataCenter implements INode {
 
     private List<PhysicalMachine> physicalMachines;
-    private int[][] locationInGrid;
+    private int[][] locationInGrid; // not necessary, delete?
+    private int locationX;
+    private int locationY;
     private double utilIdle;
     private double utilTotal;
 
@@ -61,6 +63,22 @@ public class DataCenter implements INode {
 
     public void setLocationInGrid(int[][] locationInGrid) {
         this.locationInGrid = locationInGrid;
+    }
+
+    public int getLocationX() {
+        return locationX;
+    }
+
+    public void setLocationX(int locationX) {
+        this.locationX = locationX;
+    }
+
+    public int getLocationY() {
+        return locationY;
+    }
+
+    public void setLocationY(int locationY) {
+        this.locationY = locationY;
     }
 
     public double getUtilIdle() {
