@@ -1,6 +1,7 @@
 package controller;
 
 import assets.Assets;
+import assets.Settings;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -22,7 +23,7 @@ public class Main extends Application {
     }
 
     private void initInfrastructure(GUIController guiController) {
-        Grid grid = new Grid(2, 5);
+        Grid grid = new Grid(Settings.numberOfDataCenters, Settings.gridSize);
 
         guiController.DrawGrid(grid);
 

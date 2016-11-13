@@ -13,7 +13,7 @@ public class Job {
 
         Thread.sleep(RandomNumber.nextGaussian(10000, 5000));
 
-        if(RandomNumber.nextInt(1, 100) <= 40)
+        if(RandomNumber.nextInt(1, 100) <= 5)
             throw new Failure(this); // 5%
         else {
             throw new Success(this); // 95%

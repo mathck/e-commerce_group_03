@@ -1,5 +1,6 @@
 package model.implementations;
 
+import assets.Settings;
 import javafx.util.Pair;
 import model.interfaces.INode;
 import model.utility.RandomNumber;
@@ -20,7 +21,7 @@ public class Grid {
         for (int row = 0; row < dimension; row++)
             for (int col = 0; col < dimension; col++)
                 if(randomDataCenterPositions.contains(new Pair<>(row, col))) {
-                    DataCenter dc = new DataCenter(1);
+                    DataCenter dc = new DataCenter(RandomNumber.nextGaussian(Settings.numberOfPhysicalMachinesPerDC));
                     dc.setLocationX(row);
                     dc.setLocationY(col);
                     Nodes[row][col] = dc;

@@ -1,5 +1,6 @@
 package model.implementations;
 
+import assets.Settings;
 import model.exceptions.JobEvent;
 import model.utility.RandomNumber;
 
@@ -10,9 +11,9 @@ public class PhysicalMachine {
 
     private List<VirtualMachine> virtualMachines;
 
-    private double cpu = RandomNumber.nextGaussian(3000);
-    private double memory = RandomNumber.nextGaussian(5000);
-    private double bandwidth = RandomNumber.nextGaussian(5000);
+    private double cpu = RandomNumber.nextGaussian(Settings.pMcpu);
+    private double memory = RandomNumber.nextGaussian(Settings.pMmemory);
+    private double bandwidth = RandomNumber.nextGaussian(Settings.pMbandwidth);
 
     private double utilTotal;
     private double utilIdle;
@@ -26,7 +27,7 @@ public class PhysicalMachine {
     public PhysicalMachine() {
         virtualMachines = new ArrayList<>();
 
-        int numberOfVirtualMachines = 1;//(int) (memory / 100);
+        int numberOfVirtualMachines = (int) (memory / Settings.memoryPerPM);
         int consumedCPU = (int) (getCpu() / numberOfVirtualMachines);
         int consumedMemory = (int) (getMemory() / numberOfVirtualMachines);
         int consumedBandwidth = (int) (getBandwidth() / numberOfVirtualMachines);
