@@ -6,11 +6,16 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import model.exceptions.Failure;
+import model.exceptions.JobEvent;
+import model.exceptions.Success;
+import model.implementations.DataCenter;
 import model.implementations.Grid;
-import model.interfaces.INode;
+import model.implementations.Job;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.TimerTask;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -32,12 +37,8 @@ public class Main extends Application {
     private void initInfrastructure(GUIController guiController) {
         Grid grid = new Grid(100, 20);
 
-        // just for testing to review the produced array in the output
-        for (INode[] node : grid.getNodes())
-            System.out.println(Arrays.toString(node));
-
         guiController.DrawGrid(grid);
-        startPeriodicDataTask(guiController);
+        startPeriodicJobProducer(grid, guiController);
     }
 
     private FXMLLoader setUpGUI(Stage primaryStage) throws java.io.IOException {
@@ -51,19 +52,40 @@ public class Main extends Application {
         return guiLoader;
     }
 
-    /**
-     * KILL ME
-     */
-    private void startPeriodicDataTask(GUIController guiController) {
-        TimerTask periodicDataTask = new TimerTask() {
+    private void startPeriodicJobProducer(Grid grid, GUIController guiController) {
+        ArrayList<DataCenter> dataCenters = new ArrayList<>(grid.getDataCenters());
+        ExecutorService executor = Executors.newCachedThreadPool();
+
+        TimerTask periodicJob = new TimerTask() {
+
             @Override
             public void run() {
-                guiController.AddDataPoint();
+                executor.execute(() -> {
+                    try {
+
+                        for (DataCenter dataCenter : dataCenters) {
+                            if (dataCenter.hasFreePM()) {
+                                dataCenter.setJob(new Job());
+                                return;
+                            }
+                        }
+                    }
+                    catch (JobEvent event) {
+                        if (event instanceof Failure) {
+                            guiController.AddException(event);
+                        } else if (event instanceof Success) {
+                            guiController.AddFinished(event);
+                        }
+                    }
+                    catch (InterruptedException ex) {
+                        ex.printStackTrace();
+                    }
+                });
             }
         };
 
-        scheduler.scheduleAtFixedRate(  periodicDataTask,
-                                        2000,   // delay
+        scheduler.scheduleAtFixedRate(  periodicJob,
+                                        2000,    // delay
                                         500,    // period length
                                         TimeUnit.MILLISECONDS);
     }

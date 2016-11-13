@@ -30,4 +30,11 @@ public class PMCalculation {
         return  Math.abs(sourceX - targetX) +
                 Math.abs(sourceY - targetY);
     }
+
+    /**
+     * Formula Manhattan distance * 30
+     */
+    public static int getLatency(int sourceX, int sourceY, int targetX, int targetY) {
+        return  manhattanDistance(sourceX, sourceY, targetX, targetY) * 30;
+    }
 }

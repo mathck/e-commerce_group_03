@@ -1,17 +1,27 @@
 package model.implementations;
 
+import model.exceptions.JobEvent;
+
 import java.util.Date;
 
 public class VirtualMachine {
 
     private double size;
-    private double consMemory;
-    private double consCPU;
-    private double consBandwidth;
+    private double consumedMemory;
+    private double consumedCPU;
+    private double consumedBandwidth;
     private double pageDirtyingRate;
     private Date dateStarted;
     private long runningTime;
     private String originRequest;
+
+    private Job job;
+
+    public VirtualMachine(int consCPU, int consMemory, int consBandwidth) {
+        this.consumedCPU = consCPU;
+        this.consumedMemory = consMemory;
+        this.consumedBandwidth = consBandwidth;
+    }
 
     public double getSize() {
         return size;
@@ -21,28 +31,28 @@ public class VirtualMachine {
         this.size = size;
     }
 
-    public double getConsMemory() {
-        return consMemory;
+    public double getConsumedMemory() {
+        return consumedMemory;
     }
 
-    public void setConsMemory(double consMemory) {
-        this.consMemory = consMemory;
+    public void setConsumedMemory(double consumedMemory) {
+        this.consumedMemory = consumedMemory;
     }
 
-    public double getConsCPU() {
-        return consCPU;
+    public double getConsumedCPU() {
+        return consumedCPU;
     }
 
-    public void setConsCPU(double consCPU) {
-        this.consCPU = consCPU;
+    public void setConsumedCPU(double consumedCPU) {
+        this.consumedCPU = consumedCPU;
     }
 
-    public double getConsBandwidth() {
-        return consBandwidth;
+    public double getConsumedBandwidth() {
+        return consumedBandwidth;
     }
 
-    public void setConsBandwidth(double consBandwidth) {
-        this.consBandwidth = consBandwidth;
+    public void setConsumedBandwidth(double consumedBandwidth) {
+        this.consumedBandwidth = consumedBandwidth;
     }
 
     public double getPageDirtyingRate() {
@@ -77,5 +87,18 @@ public class VirtualMachine {
 
     public void setOriginRequest(String originRequest) {
         this.originRequest = originRequest;
+    }
+
+    public Job getJob() {
+        return job;
+    }
+
+    public void setJob(Job job) throws JobEvent, InterruptedException {
+        this.job = job;
+        job.run();
+    }
+
+    public boolean hasJob() {
+        return job != null;
     }
 }

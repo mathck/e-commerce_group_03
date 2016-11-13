@@ -8,6 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.*;
+import model.exceptions.JobEvent;
 import model.implementations.DataCenter;
 import model.implementations.Grid;
 import model.interfaces.INode;
@@ -28,6 +29,9 @@ public class GUIController implements Initializable {
     private XYChart.Series baselineLineChart = new XYChart.Series();
     private XYChart.Series extensionLineChart = new XYChart.Series();
     private XYChart.Series bubbleChartGrid = new XYChart.Series();
+
+    private int successes;
+    private int failures;
 
     public void DrawGrid(Grid grid) {
 
@@ -52,7 +56,7 @@ public class GUIController implements Initializable {
 
     private int counter = 0;
 
-    public void AddDataPoint() {
+    public void addDataPoint() {
         try {
             baselineLineChart.getData().add(new XYChart.Data(counter, RandomNumber.nextInt(0, 10)));
             extensionLineChart.getData().add(new XYChart.Data(counter, RandomNumber.nextInt(0, 10)));
@@ -127,5 +131,15 @@ public class GUIController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // not implemented
+    }
+
+    public void AddFinished(JobEvent event) {
+        successes++;
+        System.out.println("SUCCESS");
+    }
+
+    public void AddException(JobEvent failure) {
+        failures++;
+        System.out.println("FAILED");
     }
 }

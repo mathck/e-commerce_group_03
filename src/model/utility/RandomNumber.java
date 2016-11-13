@@ -19,6 +19,11 @@ public class RandomNumber {
                 ThreadLocalRandom.current().nextGaussian() * standardDeviation + mean);
     }
 
+    public static int nextGaussian(int mean, int stdDev) {
+        return (int) Math.round(
+                ThreadLocalRandom.current().nextGaussian() * stdDev + mean);
+    }
+
     public static ArrayList<Pair<Integer, Integer>> nextIntPairUnique(int resultAmount, int minValue, int maxValue) {
         ArrayList<Pair<Integer, Integer>> result = new ArrayList<>();
         ArrayList<Pair<Integer, Integer>> pairs = new ArrayList<>();

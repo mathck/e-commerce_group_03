@@ -1,5 +1,6 @@
 package model.implementations;
 
+import model.exceptions.JobEvent;
 import model.interfaces.INode;
 
 import java.util.ArrayList;
@@ -15,9 +16,30 @@ public class DataCenter implements INode {
     DataCenter(int numberOfPhysicalMachines) {
         physicalMachines = new ArrayList<>(numberOfPhysicalMachines);
 
+        for(int i = 0; i < numberOfPhysicalMachines; i++)
+            physicalMachines.add(new PhysicalMachine());
+
         for (PhysicalMachine physicalMachine : physicalMachines) {
             utilTotal += physicalMachine.getUtilTotal();
         }
+    }
+
+    public void setJob(Job job) throws JobEvent, InterruptedException {
+        for (PhysicalMachine pm : physicalMachines)
+        {
+            if(pm.hasFreeVM()) {
+                pm.setJob(job);
+                return;
+            }
+        }
+    }
+
+    public boolean hasFreePM() {
+        for (PhysicalMachine pm : physicalMachines)
+            if(pm.hasFreeVM())
+                return true;
+
+        return false;
     }
 
     @Override

@@ -8,8 +8,10 @@ import java.util.ArrayList;
 
 public class Grid {
     private INode[][] Nodes;
+    private int dimension;
 
     public Grid(int numberDataCenters, int dimension) {
+        this.dimension = dimension;
         Nodes = new INode[dimension][dimension];
 
         ArrayList<Pair<Integer, Integer>> randomDataCenterPositions =
@@ -25,5 +27,16 @@ public class Grid {
 
     public INode[][] getNodes() {
         return Nodes;
+    }
+
+    public ArrayList<DataCenter> getDataCenters() {
+        ArrayList<DataCenter> dataCenters = new ArrayList<>();
+
+        for (int row = 0; row < dimension; row++)
+            for (int col = 0; col < dimension; col++)
+                if(Nodes[row][col] instanceof DataCenter)
+                    dataCenters.add((DataCenter) Nodes[row][col]);
+
+        return dataCenters;
     }
 }

@@ -1,5 +1,8 @@
 package model.implementations;
 
+import model.exceptions.JobEvent;
+import model.utility.RandomNumber;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,9 +10,9 @@ public class PhysicalMachine {
 
     private List<VirtualMachine> virtualMachines;
 
-    private double cpu;
-    private double memory;
-    private double bandwidth;
+    private double cpu = RandomNumber.nextGaussian(3000);
+    private double memory = RandomNumber.nextGaussian(5000);
+    private double bandwidth = RandomNumber.nextGaussian(5000);
 
     private double utilTotal;
     private double utilIdle;
@@ -20,8 +23,35 @@ public class PhysicalMachine {
     private double workloadMemory;
     private double workloadBandwidth;
 
-    public PhysicalMachine(int numberOfVirtualMachines) {
-        virtualMachines = new ArrayList<>(numberOfVirtualMachines);
+    public PhysicalMachine() {
+        virtualMachines = new ArrayList<>();
+
+        int numberOfVirtualMachines = (int) (memory / 100);
+        int consumedCPU = (int) (getCpu() / numberOfVirtualMachines);
+        int consumedMemory = (int) (getMemory() / numberOfVirtualMachines);
+        int consumedBandwidth = (int) (getBandwidth() / numberOfVirtualMachines);
+
+        for(int i = 0; i < numberOfVirtualMachines; i++)
+            virtualMachines.add(new VirtualMachine(consumedCPU, consumedMemory, consumedBandwidth));
+    }
+
+    public boolean setJob(Job job) throws JobEvent, InterruptedException {
+        for (VirtualMachine vm : virtualMachines)
+        {
+            if(!vm.hasJob()) {
+                vm.setJob(job);
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public boolean hasFreeVM() {
+        for (VirtualMachine vm : virtualMachines)
+            if(!vm.hasJob())
+                return true;
+        return false;
     }
 
     public double getCpu() {
@@ -49,7 +79,7 @@ public class PhysicalMachine {
     }
 
     public double getUtilTotal() {
-        utilTotal=utilIdle + workloadCPU*utilCPU + workloadMemory*utilMemory + workloadBandwidth*utilBandwidth;
+        utilTotal = utilIdle +workloadCPU*utilCPU + workloadMemory * utilMemory + workloadBandwidth*utilBandwidth;
         return utilTotal;
     }
 

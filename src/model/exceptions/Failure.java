@@ -1,4 +1,9 @@
 package model.exceptions;
 
-abstract class Failure extends Exception {
+
+public class Failure extends JobEvent {
+
+    public Failure(model.implementations.Job job) {
+        super(job);
+    }
 }
