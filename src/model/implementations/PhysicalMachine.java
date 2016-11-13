@@ -26,7 +26,7 @@ public class PhysicalMachine {
     public PhysicalMachine() {
         virtualMachines = new ArrayList<>();
 
-        int numberOfVirtualMachines = (int) (memory / 100);
+        int numberOfVirtualMachines = 1;//(int) (memory / 100);
         int consumedCPU = (int) (getCpu() / numberOfVirtualMachines);
         int consumedMemory = (int) (getMemory() / numberOfVirtualMachines);
         int consumedBandwidth = (int) (getBandwidth() / numberOfVirtualMachines);

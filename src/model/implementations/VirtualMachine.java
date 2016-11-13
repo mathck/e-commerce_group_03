@@ -95,8 +95,18 @@ public class VirtualMachine {
 
     public void setJob(Job job) throws JobEvent, InterruptedException {
         this.job = job;
-        job.run();
-        this.setJob(null);
+
+        try {
+
+            job.run();
+
+        }
+        catch (JobEvent | InterruptedException rethrow)
+        {
+            this.job = null;
+            throw rethrow;
+        }
+
     }
 
     public boolean hasJob() {

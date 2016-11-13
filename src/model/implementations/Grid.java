@@ -20,7 +20,7 @@ public class Grid {
         for (int row = 0; row < dimension; row++)
             for (int col = 0; col < dimension; col++)
                 if(randomDataCenterPositions.contains(new Pair<>(row, col))) {
-                    DataCenter dc = new DataCenter(RandomNumber.nextGaussian(40));
+                    DataCenter dc = new DataCenter(1);
                     dc.setLocationX(row);
                     dc.setLocationY(col);
                     Nodes[row][col] = dc;

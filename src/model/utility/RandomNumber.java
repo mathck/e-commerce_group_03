@@ -20,8 +20,8 @@ public class RandomNumber {
     }
 
     public static int nextGaussian(int mean, int stdDev) {
-        return (int) Math.round(
-                ThreadLocalRandom.current().nextGaussian() * stdDev + mean);
+        return (int) Math.abs(Math.round(
+                ThreadLocalRandom.current().nextGaussian() * stdDev + mean));
     }
 
     public static ArrayList<Pair<Integer, Integer>> nextIntPairUnique(int resultAmount, int minValue, int maxValue) {

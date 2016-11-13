@@ -44,12 +44,12 @@ public class GUIController extends GUIWidgets implements Initializable {
 
     public void addFinished(JobEvent event) {
         successes++;
-        System.out.println("SUCCESS");
+        System.out.println("SUCCESS: " + event.hashCode());
     }
 
     public void addException(JobEvent failure) {
         failures++;
-        System.out.println("FAILED");
+        System.out.println("FAILED: " + failure.hashCode());
     }
 
     public void plotData() {
@@ -73,7 +73,6 @@ public class GUIController extends GUIWidgets implements Initializable {
         if(extensionEnabled()) {
             Platform.runLater(() -> extensionLineChart.getData().add(new XYChart.Data(counter++, successes)));
         }
-        System.out.println("SUCCESS");
     }
 
     private boolean baseLineEnabled(){

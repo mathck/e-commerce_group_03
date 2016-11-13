@@ -24,6 +24,14 @@ public class JobEngine {
     private static JobEngine instance;
     private boolean isRunning = false;
 
+    public void run() {
+        if(isRunning)
+            stop();
+
+        scheduler.scheduleAtFixedRate(periodicJob, 0, 250, TimeUnit.MILLISECONDS);
+        isRunning = true;
+    }
+
     private JobEngine () {
 
     }
@@ -45,7 +53,7 @@ public class JobEngine {
                 executor.execute(() -> {
 
                     Job currentJob = new Job();
-                    DataCenter currentDataCenter = dataCenters.get(1); // TODO why 1 and not 0?
+                    DataCenter currentDataCenter = dataCenters.get(0);
 
                     guiController.plotData();
 
@@ -79,7 +87,6 @@ public class JobEngine {
                                 } else if (jobEvent instanceof Success) {
                                     guiController.addFinished(jobEvent);
                                     System.out.println("second try success");
-
                                 }
 
                             } catch (InterruptedException e) {
@@ -98,19 +105,8 @@ public class JobEngine {
         };
     }
 
-    public void run() {
-        if(isRunning)
-            stop();
-
-        scheduler.scheduleAtFixedRate(  periodicJob,
-                                        0,      // delay
-                                        500,    // period length
-                                        TimeUnit.MILLISECONDS);
-        isRunning = true;
-    }
-
     // TODO make this work kk
-    private void stop() {
+    public void stop() {
         scheduler.shutdown();
         scheduler = null;
         scheduler = Executors.newScheduledThreadPool(1);

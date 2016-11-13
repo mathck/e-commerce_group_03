@@ -11,7 +11,7 @@ class JobTransferLogic {
 
     JobTransferLogic(ArrayList<DataCenter> dataCenters, DataCenter currentDataCenter, Job currentJob) throws JobEvent, InterruptedException {
 
-        System.out.println("transmit to next datacenter");
+        System.out.println("transmit to next datacenter: " + currentJob.hashCode());
 
         int sourceX = currentDataCenter.getLocationX();
         int sourceY = currentDataCenter.getLocationY();
@@ -26,7 +26,7 @@ class JobTransferLogic {
                 targetX = dataCenter.getLocationX();
                 targetY = dataCenter.getLocationY();
 
-                int manhattanDistance = PMCalculation.manhattanDistance(sourceX,sourceY,targetX,targetY);
+                int manhattanDistance = PMCalculation.manhattanDistance(sourceX, sourceY, targetX, targetY);
 
                 if(nextDataCenter == currentDataCenter) {
                     nextDataCenterDistance = manhattanDistance;

@@ -111,6 +111,8 @@ class GUIWidgets {
         ObservableList<PieChart.Data> pieChartData =
                 FXCollections.observableArrayList();
         baselinePieChart.setData(pieChartData);
+
+        JobEngine.getInstance().stop();
     }
 
     @FXML
@@ -122,5 +124,7 @@ class GUIWidgets {
         ObservableList<PieChart.Data> pieChartData =
                 FXCollections.observableArrayList();
         extensionPieChart.setData(pieChartData);
+
+        JobEngine.getInstance().stop();
     }
 }

@@ -22,7 +22,7 @@ public class Main extends Application {
     }
 
     private void initInfrastructure(GUIController guiController) {
-        Grid grid = new Grid(100, 20);
+        Grid grid = new Grid(2, 5);
 
         guiController.DrawGrid(grid);
 
