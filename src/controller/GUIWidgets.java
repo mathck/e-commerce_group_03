@@ -43,6 +43,7 @@ class GUIWidgets {
         startButtonBaseline.setDisable(true);
         stopButtonBaseline.setDisable(false);
         resetButtonBaseline.setDisable(true);
+        startButtonExtension.setDisable(true);
 
         ObservableList<PieChart.Data> pieChartData =
                 FXCollections.observableArrayList(
@@ -62,11 +63,12 @@ class GUIWidgets {
         startButtonExtension.setDisable(true);
         stopButtonExtension.setDisable(false);
         resetButtonExtension.setDisable(true);
+        startButtonBaseline.setDisable(true);
 
         ObservableList<PieChart.Data> pieChartData =
                 FXCollections.observableArrayList(
-                        new PieChart.Data("Success", 0),
-                        new PieChart.Data("Failure", 0));
+                        new PieChart.Data("Success, 50%", 1),
+                        new PieChart.Data("Failure, 50%", 1));
 
         extensionPieChart.setData(pieChartData);
 
@@ -107,10 +109,7 @@ class GUIWidgets {
         startButtonBaseline.setDisable(false);
         stopButtonBaseline.setDisable(true);
         resetButtonBaseline.setDisable(false);
-
-        ObservableList<PieChart.Data> pieChartData =
-                FXCollections.observableArrayList();
-        baselinePieChart.setData(pieChartData);
+        startButtonExtension.setDisable(false);
 
         JobEngine.getInstance().stop();
     }
@@ -120,10 +119,7 @@ class GUIWidgets {
         startButtonExtension.setDisable(false);
         stopButtonExtension.setDisable(true);
         resetButtonExtension.setDisable(false);
-
-        ObservableList<PieChart.Data> pieChartData =
-                FXCollections.observableArrayList();
-        extensionPieChart.setData(pieChartData);
+        startButtonBaseline.setDisable(false);
 
         JobEngine.getInstance().stop();
     }
