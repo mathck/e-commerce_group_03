@@ -55,12 +55,15 @@ public class Main extends Application {
     private void startPeriodicJobProducer(Grid grid, GUIController guiController) {
         ArrayList<DataCenter> dataCenters = new ArrayList<>(grid.getDataCenters());
         ExecutorService executor = Executors.newCachedThreadPool();
-
         TimerTask periodicJob = new TimerTask() {
 
             @Override
             public void run() {
                 executor.execute(() -> {
+
+                    // plot Linechart in fixed time interval
+                    guiController.plotData();
+
                     try {
 
                         for (DataCenter dataCenter : dataCenters) {
@@ -72,9 +75,9 @@ public class Main extends Application {
                     }
                     catch (JobEvent event) {
                         if (event instanceof Failure) {
-                            guiController.AddException(event);
+                            guiController.addException(event);
                         } else if (event instanceof Success) {
-                            guiController.AddFinished(event);
+                            guiController.addFinished(event);
                         }
                     }
                     catch (InterruptedException ex) {

@@ -2,12 +2,15 @@ package controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.*;
+import javafx.scene.control.Button;
 import model.exceptions.JobEvent;
 import model.implementations.DataCenter;
 import model.implementations.Grid;
@@ -25,13 +28,26 @@ public class GUIController implements Initializable {
     private LineChart lineChart;
     @FXML
     private BubbleChart bubbleChart;
+    @FXML
+    private Button startButtonBaseline;
+    @FXML
+    private Button stopButtonBaseline;
+    @FXML
+    private Button resetButtonBaseline;
+    @FXML
+    private Button startButtonExtension;
+    @FXML
+    private Button stopButtonExtension;
+    @FXML
+    private Button resetButtonExtension;
 
     private XYChart.Series baselineLineChart = new XYChart.Series();
     private XYChart.Series extensionLineChart = new XYChart.Series();
     private XYChart.Series bubbleChartGrid = new XYChart.Series();
 
-    private int successes;
-    private int failures;
+    private int successes = 0;
+    private int failures = 0;
+    private int counter = 0;
 
     public void DrawGrid(Grid grid) {
 
@@ -54,7 +70,7 @@ public class GUIController implements Initializable {
         yAxis.setTickLabelsVisible(false);
     }
 
-    private int counter = 0;
+
 
     public void addDataPoint() {
         try {
@@ -72,10 +88,14 @@ public class GUIController implements Initializable {
 
     @FXML
     private void handleStartButtonBaselineAction(ActionEvent event) throws InterruptedException {
+        startButtonBaseline.setDisable(true);
+        stopButtonBaseline.setDisable(false);
+        resetButtonBaseline.setDisable(true);
+
         ObservableList<PieChart.Data> pieChartData =
                 FXCollections.observableArrayList(
-                        new PieChart.Data("Success, 60%", 60),
-                        new PieChart.Data("Fail, 40%", 40));
+                        new PieChart.Data("Success, 50%", 1),
+                        new PieChart.Data("Failure, 50%", 1));
 
         baselinePieChart.setData(pieChartData);
 
@@ -85,10 +105,14 @@ public class GUIController implements Initializable {
 
     @FXML
     private void handleStartButtonExtensionAction(ActionEvent event) {
+        startButtonExtension.setDisable(true);
+        stopButtonExtension.setDisable(false);
+        resetButtonExtension.setDisable(true);
+
         ObservableList<PieChart.Data> pieChartData =
                 FXCollections.observableArrayList(
-                        new PieChart.Data("Success, 80%", 80),
-                        new PieChart.Data("Fail, 20%", 20));
+                        new PieChart.Data("Success", 0),
+                        new PieChart.Data("Failure", 0));
 
         extensionPieChart.setData(pieChartData);
 
@@ -98,6 +122,10 @@ public class GUIController implements Initializable {
 
     @FXML
     private void handleResetButtonBaselineAction(ActionEvent event) {
+        startButtonBaseline.setDisable(false);
+        stopButtonBaseline.setDisable(true);
+        resetButtonBaseline.setDisable(true);
+
         ObservableList<PieChart.Data> pieChartData =
                 FXCollections.observableArrayList();
 
@@ -107,6 +135,10 @@ public class GUIController implements Initializable {
 
     @FXML
     private void handleResetButtonExtensionAction(ActionEvent event) {
+        startButtonExtension.setDisable(false);
+        stopButtonExtension.setDisable(true);
+        resetButtonExtension.setDisable(true);
+
         ObservableList<PieChart.Data> pieChartData =
                 FXCollections.observableArrayList();
 
@@ -116,6 +148,10 @@ public class GUIController implements Initializable {
 
     @FXML
     private void handleStopButtonBaselineAction(ActionEvent event) {
+        startButtonBaseline.setDisable(false);
+        stopButtonBaseline.setDisable(true);
+        resetButtonBaseline.setDisable(false);
+
         ObservableList<PieChart.Data> pieChartData =
                 FXCollections.observableArrayList();
         baselinePieChart.setData(pieChartData);
@@ -123,6 +159,10 @@ public class GUIController implements Initializable {
 
     @FXML
     private void handleStopButtonExtensionAction(ActionEvent event) {
+        startButtonExtension.setDisable(false);
+        stopButtonExtension.setDisable(true);
+        resetButtonExtension.setDisable(false);
+
         ObservableList<PieChart.Data> pieChartData =
                 FXCollections.observableArrayList();
         extensionPieChart.setData(pieChartData);
@@ -133,13 +173,47 @@ public class GUIController implements Initializable {
         // not implemented
     }
 
-    public void AddFinished(JobEvent event) {
+    public void addFinished(JobEvent event) {
         successes++;
         System.out.println("SUCCESS");
     }
 
-    public void AddException(JobEvent failure) {
+    public void addException(JobEvent failure) {
         failures++;
         System.out.println("FAILED");
+    }
+
+    public void plotData() {
+        if(baseLineEnabled()) {
+            Platform.runLater(() -> baselineLineChart.getData().add(new XYChart.Data(counter++, successes)));
+            Platform.runLater(new Runnable() {
+                @Override public void run() {
+                    for(PieChart.Data d : baselinePieChart.getData())
+                    {
+                        if(d.getName().startsWith("Success"))
+                        {
+                            d.setPieValue(successes);
+                            d.setName("Success, " + successes);
+                        }
+                        else{
+                            d.setPieValue(failures);
+                            d.setName("Failure, " + failures);
+                        }
+                    }
+                }
+            });
+        }
+        if(extensionEnabled()) {
+            Platform.runLater(() -> extensionLineChart.getData().add(new XYChart.Data(counter++, successes)));
+        }
+        System.out.println("SUCCESS");
+    }
+
+    public boolean baseLineEnabled(){
+        return startButtonBaseline.isDisabled();
+    }
+
+    public boolean extensionEnabled(){
+        return startButtonExtension.isDisabled();
     }
 }
