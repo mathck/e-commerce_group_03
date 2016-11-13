@@ -47,12 +47,12 @@ public class GUIController extends GUIWidgets implements Initializable {
 
     public void addFinished(JobEvent event) {
         successes++;
-        System.out.println("SUCCESS: " + event.hashCode());
+        System.out.println("\u001B[32m" + "SUCCESS: " + event.hashCode() + "\u001B[0m");
     }
 
     public void addException(JobEvent failure) {
         failures++;
-        System.out.println("FAILED: " + failure.hashCode());
+        System.out.println("\u001B[31m" + "FAILED: " + failure.hashCode() + "\u001B[0m");
     }
 
     public void addLatency(int latencyms) {

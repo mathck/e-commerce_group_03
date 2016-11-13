@@ -12,7 +12,7 @@ class JobTransferLogic {
 
     JobTransferLogic(GUIController guiController, ArrayList<DataCenter> dataCenters, DataCenter currentDataCenter, Job currentJob) throws JobEvent, InterruptedException {
 
-        System.out.println("transfer to closest DataCenter: " + currentJob.hashCode());
+        System.out.println("\u001B[35m" + "transfer to closest DataCenter: " + currentJob.hashCode() + "\u001B[0m");
 
         int sourceX = currentDataCenter.getLocationX();
         int sourceY = currentDataCenter.getLocationY();
