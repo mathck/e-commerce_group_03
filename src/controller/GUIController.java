@@ -18,9 +18,12 @@ public class GUIController extends GUIWidgets implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) { }
 
-    private int successes = 0;
-    private int failures = 0;
-    private int lineChartXCounter = 0;
+    private int baselineSuccesses = 0;
+    private int baselineFailures = 0;
+    private int extensionSuccesses = 0;
+    private int extensionFailures = 0;
+    private int baselineLineChartXCounter = 0;
+    private int extensionLineChartXCounter = 0;
 
     private ArrayList<Integer> latencys = new ArrayList<>();
 
@@ -46,12 +49,14 @@ public class GUIController extends GUIWidgets implements Initializable {
     }
 
     public void addFinished(JobEvent event) {
-        successes++;
+        baselineSuccesses++;
+        extensionSuccesses++;
         System.out.println("SUCCESS: " + event.hashCode());
     }
 
     public void addException(JobEvent failure) {
-        failures++;
+        baselineFailures++;
+        extensionFailures++;
         System.out.println("FAILED: " + failure.hashCode());
     }
 
@@ -61,24 +66,38 @@ public class GUIController extends GUIWidgets implements Initializable {
 
     public void plotData() {
         if(baseLineEnabled()) {
-            Platform.runLater(() -> baselineLineChart.getData().add(new XYChart.Data(lineChartXCounter++, successes)));
+            Platform.runLater(() -> baselineLineChart.getData().add(new XYChart.Data(baselineLineChartXCounter++, baselineSuccesses)));
             Platform.runLater(() -> {
                 for(PieChart.Data data : baselinePieChart.getData())
                 {
                     if(data.getName().startsWith("Success"))
                     {
-                        data.setPieValue(successes);
-                        data.setName("Success, " + successes);
+                        data.setPieValue(baselineSuccesses);
+                        data.setName("Success, " + baselineSuccesses);
                     }
                     else{
-                        data.setPieValue(failures);
-                        data.setName("Failure, " + failures);
+                        data.setPieValue(baselineFailures);
+                        data.setName("Failure, " + baselineFailures);
                     }
                 }
             });
         }
         if(extensionEnabled()) {
-            Platform.runLater(() -> extensionLineChart.getData().add(new XYChart.Data(lineChartXCounter++, successes)));
+            Platform.runLater(() -> extensionLineChart.getData().add(new XYChart.Data(extensionLineChartXCounter++, extensionSuccesses)));
+            Platform.runLater(() -> {
+                for(PieChart.Data data : extensionPieChart.getData())
+                {
+                    if(data.getName().startsWith("Success"))
+                    {
+                        data.setPieValue(extensionSuccesses);
+                        data.setName("Success, " + extensionSuccesses);
+                    }
+                    else{
+                        data.setPieValue(extensionFailures);
+                        data.setName("Failure, " + extensionFailures);
+                    }
+                }
+            });
         }
     }
 
