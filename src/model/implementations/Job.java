@@ -14,7 +14,7 @@ public class Job {
 
         latency(latency);
 
-        System.out.println("\u001B[34m" + "new job: " + this.hashCode() + "\u001B[0m");
+        System.out.println("\u001B[34m" + "started job: " + this.hashCode() + "\u001B[0m");
 
         Thread.sleep(RandomNumber.nextGaussian(10000, 5000));
 
