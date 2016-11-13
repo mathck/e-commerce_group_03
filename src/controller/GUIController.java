@@ -1,6 +1,7 @@
 package controller;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import javafx.application.Platform;
@@ -19,7 +20,9 @@ public class GUIController extends GUIWidgets implements Initializable {
 
     private int successes = 0;
     private int failures = 0;
-    private int counter = 0;
+    private int lineChartXCounter = 0;
+
+    private ArrayList<Integer> latencys = new ArrayList<>();
 
     void DrawGrid(Grid grid) {
 
@@ -52,9 +55,13 @@ public class GUIController extends GUIWidgets implements Initializable {
         System.out.println("FAILED: " + failure.hashCode());
     }
 
+    public void addLatency(int latencyms) {
+        latencys.add(latencyms);
+    }
+
     public void plotData() {
         if(baseLineEnabled()) {
-            Platform.runLater(() -> baselineLineChart.getData().add(new XYChart.Data(counter++, successes)));
+            Platform.runLater(() -> baselineLineChart.getData().add(new XYChart.Data(lineChartXCounter++, successes)));
             Platform.runLater(() -> {
                 for(PieChart.Data data : baselinePieChart.getData())
                 {
@@ -71,7 +78,7 @@ public class GUIController extends GUIWidgets implements Initializable {
             });
         }
         if(extensionEnabled()) {
-            Platform.runLater(() -> extensionLineChart.getData().add(new XYChart.Data(counter++, successes)));
+            Platform.runLater(() -> extensionLineChart.getData().add(new XYChart.Data(lineChartXCounter++, successes)));
         }
     }
 

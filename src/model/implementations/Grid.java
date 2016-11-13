@@ -2,6 +2,7 @@ package model.implementations;
 
 import assets.Settings;
 import javafx.util.Pair;
+import model.calculations.PMCalculation;
 import model.interfaces.INode;
 import model.utility.RandomNumber;
 
@@ -43,5 +44,19 @@ public class Grid {
                     dataCenters.add((DataCenter) Nodes[row][col]);
 
         return dataCenters;
+    }
+
+    @Deprecated
+    void printBandwidthMatrix() {
+        ArrayList<DataCenter> dataCenters1 = getDataCenters();
+        for (int i1 = 0; i1 < dataCenters1.size(); i1++) {
+            DataCenter dataCenter = dataCenters1.get(i1);
+            ArrayList<DataCenter> dataCenters = getDataCenters();
+            for (int i = 0; i < dataCenters.size(); i++) {
+                DataCenter innerDataCenter = dataCenters.get(i);
+                System.out.println("from " + i + " to " + i1 + ": " + PMCalculation.getBandwidth(dataCenter, innerDataCenter) + "ms");
+            }
+
+        }
     }
 }

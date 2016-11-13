@@ -1,5 +1,6 @@
 package logic;
 
+import controller.GUIController;
 import model.calculations.PMCalculation;
 import model.exceptions.JobEvent;
 import model.implementations.DataCenter;
@@ -9,16 +10,17 @@ import java.util.ArrayList;
 
 class JobTransferLogic {
 
-    JobTransferLogic(ArrayList<DataCenter> dataCenters, DataCenter currentDataCenter, Job currentJob) throws JobEvent, InterruptedException {
+    JobTransferLogic(GUIController guiController, ArrayList<DataCenter> dataCenters, DataCenter currentDataCenter, Job currentJob) throws JobEvent, InterruptedException {
 
-        System.out.println("transmit to next datacenter: " + currentJob.hashCode());
+        System.out.println("transfer to closest DataCenter: " + currentJob.hashCode());
 
         int sourceX = currentDataCenter.getLocationX();
         int sourceY = currentDataCenter.getLocationY();
         int targetX;
         int targetY;
         int nextDataCenterDistance = 0;
-        int latencyms = 0;
+        int latencyms;
+
         DataCenter nextDataCenter = currentDataCenter;
 
         for (DataCenter dataCenter : dataCenters) {
@@ -38,7 +40,13 @@ class JobTransferLogic {
                 }
             }
         }
+
         latencyms = nextDataCenterDistance * 30;
+        latencyms += PMCalculation.getBandwidth(currentDataCenter, nextDataCenter);
+
+        guiController.addLatency(latencyms);
+        currentJob.addLatency(latencyms);
+
         nextDataCenter.setJob(currentJob);
     }
 }

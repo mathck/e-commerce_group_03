@@ -7,7 +7,11 @@ import model.utility.RandomNumber;
 
 public class Job {
 
+    private int latency = 0;
+
     void run() throws JobEvent, InterruptedException {
+
+        latency(latency);
 
         System.out.println("new job: " + this.hashCode());
 
@@ -18,5 +22,14 @@ public class Job {
         else {
             throw new Success(this); // 95%
         }
+    }
+
+    void latency(int ms) throws InterruptedException {
+        Thread.sleep(ms);
+        this.latency = 0;
+    }
+
+    public void addLatency(int latencyms) {
+        latency += latencyms;
     }
 }

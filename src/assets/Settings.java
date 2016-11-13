@@ -9,4 +9,5 @@ public class Settings {
     public static final int pMcpu = 3000;
     public static final int pMmemory = 5000;
     public static final int pMbandwidth = 5000;
+    public static final double basicEnergyUtilization = 5;
 }

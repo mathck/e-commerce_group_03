@@ -16,13 +16,13 @@ public class PhysicalMachine {
     private double bandwidth = RandomNumber.nextGaussian(Settings.pMbandwidth);
 
     private double utilTotal;
-    private double utilIdle;
-    private double utilCPU;
-    private double utilMemory;
-    private double utilBandwidth;
-    private double workloadCPU;
-    private double workloadMemory;
-    private double workloadBandwidth;
+    private double utilIdle = 10;
+    private double utilCPU = 10;
+    private double utilMemory = 10;
+    private double utilBandwidth = 10;
+    private double workloadCPU = 10;
+    private double workloadMemory = 10;
+    private double workloadBandwidth = 10;
 
     public PhysicalMachine() {
         virtualMachines = new ArrayList<>();
@@ -80,7 +80,7 @@ public class PhysicalMachine {
     }
 
     public double getUtilTotal() {
-        utilTotal = utilIdle +workloadCPU*utilCPU + workloadMemory * utilMemory + workloadBandwidth*utilBandwidth;
+        utilTotal = utilIdle + workloadCPU * utilCPU + workloadMemory * utilMemory + workloadBandwidth * utilBandwidth;
         return utilTotal;
     }
 

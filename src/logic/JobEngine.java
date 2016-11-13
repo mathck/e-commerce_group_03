@@ -76,7 +76,7 @@ public class JobEngine {
 
                                 } else {
 
-                                    new JobTransferLogic(dataCenters, currentDataCenter, currentJob);
+                                    new JobTransferLogic(guiController, dataCenters, currentDataCenter, currentJob);
                                 }
                             }
                             catch (JobEvent jobEvent) {
