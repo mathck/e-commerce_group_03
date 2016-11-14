@@ -56,6 +56,7 @@ public class JobEngine {
                     DataCenter currentDataCenter = grid.getNextBest();
 
                     guiController.plotData();
+                    guiController.addEnergyUtil(grid.getUtilAverage());
 
                     try {
                         currentDataCenter.setJob(currentJob);

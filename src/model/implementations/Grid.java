@@ -47,6 +47,18 @@ public class Grid {
         return dataCenters;
     }
 
+    public double getUtilAverage() {
+        double sum = 0;
+        int dataCenterCounter = 0;
+
+        for(DataCenter dataCenter : getDataCenters()) {
+            sum += dataCenter.getUtilTotal();
+            dataCenterCounter++;
+        }
+
+        return sum / dataCenterCounter;
+    }
+
     public DataCenter getNextBest() {
         DataCenter currentBest = null;
 

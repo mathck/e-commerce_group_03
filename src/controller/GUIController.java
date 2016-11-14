@@ -9,6 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.chart.*;
 import model.exceptions.JobEvent;
 import model.implementations.DataCenter;
+import model.implementations.EnergyUtil;
 import model.implementations.Grid;
 import model.interfaces.INode;
 import model.utility.MatrixCalculator;
@@ -28,6 +29,9 @@ public class GUIController extends GUIWidgets implements Initializable {
     private int extensionLineChartXCounter = 0;
 
     private ArrayList<Integer> latencys = new ArrayList<>();
+
+    private EnergyUtil baselineUtil = new EnergyUtil();
+    private EnergyUtil extendedUtil = new EnergyUtil();
 
     void drawGrid(Grid grid) {
 
@@ -64,6 +68,24 @@ public class GUIController extends GUIWidgets implements Initializable {
 
     public void addLatency(int latencyms) {
         latencys.add(latencyms);
+    }
+
+    public void addEnergyUtil(double newValue) {
+
+        if(baseLineEnabled()) {
+            baselineUtil.energyUtilAverage =
+                    (baselineUtil.energyUtilAverage * baselineUtil.energyUtilCounter + newValue) /
+                    (baselineUtil.energyUtilCounter + 1);
+
+            baselineUtil.energyUtilCounter++;
+        }
+        else if(extensionEnabled()) {
+            extendedUtil.energyUtilAverage =
+                    (extendedUtil.energyUtilAverage * extendedUtil.energyUtilCounter + newValue) /
+                            (extendedUtil.energyUtilCounter + 1);
+
+            extendedUtil.energyUtilCounter++;
+        }
     }
 
     public void plotData() {
