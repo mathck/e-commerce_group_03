@@ -16,7 +16,9 @@ import model.utility.MatrixCalculator;
 public class GUIController extends GUIWidgets implements Initializable {
 
     @Override
-    public void initialize(URL url, ResourceBundle rb) { }
+    public void initialize(URL url, ResourceBundle rb) {
+        lineChart.setCreateSymbols(false);
+    }
 
     private int baselineSuccesses = 0;
     private int baselineFailures = 0;
@@ -48,10 +50,10 @@ public class GUIController extends GUIWidgets implements Initializable {
         yAxis.setTickLabelsVisible(false);
     }
 
-    public void addFinished(JobEvent event) {
+    public void addFinished(JobEvent success) {
         baselineSuccesses++;
         extensionSuccesses++;
-        System.out.println("\u001B[32m" + "SUCCESS: " + event.hashCode() + "\u001B[0m");
+        System.out.println("\u001B[32m" + "SUCCESS: " + success.hashCode() + "\u001B[0m");
     }
 
     public void addException(JobEvent failure) {

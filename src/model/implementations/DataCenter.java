@@ -2,27 +2,23 @@ package model.implementations;
 
 import model.exceptions.JobEvent;
 import model.interfaces.INode;
+import model.utility.RandomNumber;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class DataCenter implements INode {
 
     private List<PhysicalMachine> physicalMachines;
     private int locationX;
     private int locationY;
-    private double utilIdle;
-    private double utilTotal;
 
     DataCenter(int numberOfPhysicalMachines) {
         physicalMachines = new ArrayList<>(numberOfPhysicalMachines);
 
         for(int i = 0; i < numberOfPhysicalMachines; i++)
             physicalMachines.add(new PhysicalMachine());
-
-        for (PhysicalMachine physicalMachine : physicalMachines) {
-            utilTotal += physicalMachine.getUtilTotal();
-        }
     }
 
     public void setJob(Job job) throws JobEvent, InterruptedException {
@@ -43,24 +39,25 @@ public class DataCenter implements INode {
         return false;
     }
 
+    public int getUtilTotal() {
+        int total = 0;
+
+        for (PhysicalMachine pm : physicalMachines)
+            total += pm.getUtilTotal();
+
+        return total;
+    }
+
     @Override
     public String toString() {
         return "1";
-    }
-
-    public List<PhysicalMachine> getPhysicalMachines() {
-        return physicalMachines;
-    }
-
-    public void setPhysicalMachines(List<PhysicalMachine> physicalMachines) {
-        this.physicalMachines = physicalMachines;
     }
 
     public int getLocationX() {
         return locationX;
     }
 
-    public void setLocationX(int locationX) {
+    void setLocationX(int locationX) {
         this.locationX = locationX;
     }
 
@@ -68,23 +65,7 @@ public class DataCenter implements INode {
         return locationY;
     }
 
-    public void setLocationY(int locationY) {
+    void setLocationY(int locationY) {
         this.locationY = locationY;
-    }
-
-    public double getUtilIdle() {
-        return utilIdle;
-    }
-
-    public void setUtilIdle(double utilIdle) {
-        this.utilIdle = utilIdle;
-    }
-
-    public double getUtilTotal() {
-        return utilTotal;
-    }
-
-    public void setUtilTotal(double utilTotal) {
-        this.utilTotal = utilTotal;
     }
 }

@@ -1,6 +1,7 @@
 package model.implementations;
 
 import assets.Settings;
+import javafx.scene.chart.PieChart;
 import javafx.util.Pair;
 import model.calculations.PMCalculation;
 import model.interfaces.INode;
@@ -44,6 +45,22 @@ public class Grid {
                     dataCenters.add((DataCenter) Nodes[row][col]);
 
         return dataCenters;
+    }
+
+    public DataCenter getNextBest() {
+        DataCenter currentBest = null;
+
+        for(DataCenter dataCenter : getDataCenters()) {
+            if (dataCenter.hasFreePM()) {
+                if (currentBest == null)
+                    currentBest = dataCenter;
+
+                if (dataCenter.getUtilTotal() < currentBest.getUtilTotal())
+                    currentBest = dataCenter;
+            }
+        }
+
+        return currentBest;
     }
 
     @Deprecated

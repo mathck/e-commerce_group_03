@@ -38,7 +38,7 @@ class GUIWidgets {
     protected XYChart.Series extensionLineChart = new XYChart.Series();
     protected XYChart.Series bubbleChartGrid = new XYChart.Series();
 
-    protected void drawPieCharts(){
+    protected void drawPieCharts() {
         ObservableList<PieChart.Data> pieChartDataBaseline =
                 FXCollections.observableArrayList(
                         new PieChart.Data("Success, 50%", 1),

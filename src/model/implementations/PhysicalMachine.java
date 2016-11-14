@@ -15,28 +15,24 @@ public class PhysicalMachine {
     private double memory = RandomNumber.nextGaussian(Settings.pMmemory);
     private double bandwidth = RandomNumber.nextGaussian(Settings.pMbandwidth);
 
-    private double utilTotal;
-    private double utilIdle = 10;
-    private double utilCPU = 10;
-    private double utilMemory = 10;
-    private double utilBandwidth = 10;
-    private double workloadCPU = 10;
-    private double workloadMemory = 10;
-    private double workloadBandwidth = 10;
+    private double utilIdle = RandomNumber.nextGaussian(10);
+    private double utilCPU = RandomNumber.nextGaussian(10);
+    private double utilMemory = RandomNumber.nextGaussian(10);
+    private double utilBandwidth = RandomNumber.nextGaussian(10);
 
-    public PhysicalMachine() {
+    PhysicalMachine() {
         virtualMachines = new ArrayList<>();
 
         int numberOfVirtualMachines = (int) (memory / Settings.memoryPerPM);
-        int consumedCPU = (int) (getCpu() / numberOfVirtualMachines);
-        int consumedMemory = (int) (getMemory() / numberOfVirtualMachines);
-        int consumedBandwidth = (int) (getBandwidth() / numberOfVirtualMachines);
+        int consumedCPU = (int) (cpu / numberOfVirtualMachines);
+        int consumedMemory = (int) (memory / numberOfVirtualMachines);
+        int consumedBandwidth = (int) (bandwidth / numberOfVirtualMachines);
 
         for(int i = 0; i < numberOfVirtualMachines; i++)
             virtualMachines.add(new VirtualMachine(consumedCPU, consumedMemory, consumedBandwidth));
     }
 
-    public boolean setJob(Job job) throws JobEvent, InterruptedException {
+    boolean setJob(Job job) throws JobEvent, InterruptedException {
         for (VirtualMachine vm : virtualMachines)
         {
             if(!vm.hasJob()) {
@@ -48,99 +44,37 @@ public class PhysicalMachine {
         return false;
     }
 
-    public boolean hasFreeVM() {
+    boolean hasFreeVM() {
         for (VirtualMachine vm : virtualMachines)
             if(!vm.hasJob())
                 return true;
         return false;
     }
 
-    public double getCpu() {
-        return cpu;
-    }
-
-    public void setCpu(double cpu) {
-        this.cpu = cpu;
-    }
-
-    public double getMemory() {
-        return memory;
-    }
-
-    public void setMemory(double memory) {
-        this.memory = memory;
-    }
-
-    public double getBandwidth() {
-        return bandwidth;
-    }
-
-    public void setBandwidth(double bandwidth) {
-        this.bandwidth = bandwidth;
+    private int getCurrentNumberOfJobs() {
+        int jobCounter = 0;
+        for (VirtualMachine vm : virtualMachines)
+            if(vm.hasJob())
+                jobCounter++;
+        return jobCounter;
     }
 
     public double getUtilTotal() {
-        utilTotal = utilIdle + workloadCPU * utilCPU + workloadMemory * utilMemory + workloadBandwidth * utilBandwidth;
-        return utilTotal;
+        return  utilIdle +
+                getWorkloadCPU() * utilCPU +
+                getWorkloadMemory() * utilMemory +
+                getWorkloadBandwidth() * utilBandwidth;
     }
 
-    private void setUtilTotal(double utilTotal) {
-        this.utilTotal = utilTotal;
+    private double getWorkloadCPU() {
+        return RandomNumber.nextGaussian(10, 5) * getCurrentNumberOfJobs();
     }
 
-    public double getUtilIdle() {
-        return utilIdle;
+    private double getWorkloadMemory() {
+        return RandomNumber.nextGaussian(20, 8) * getCurrentNumberOfJobs();
     }
 
-    public void setUtilIdle(double utilIdle) {
-        this.utilIdle = utilIdle;
-    }
-
-    public double getUtilCPU() {
-        return utilCPU;
-    }
-
-    public void setUtilCPU(double utilCPU) {
-        this.utilCPU = utilCPU;
-    }
-
-    public double getUtilMemory() {
-        return utilMemory;
-    }
-
-    public void setUtilMemory(double utilMemory) {
-        this.utilMemory = utilMemory;
-    }
-
-    public double getUtilBandwidth() {
-        return utilBandwidth;
-    }
-
-    public void setUtilBandwidth(double utilBandwidth) {
-        this.utilBandwidth = utilBandwidth;
-    }
-
-    public double getWorkloadCPU() {
-        return workloadCPU;
-    }
-
-    public void setWorkloadCPU(double workloadCPU) {
-        this.workloadCPU = workloadCPU;
-    }
-
-    public double getWorkloadMemory() {
-        return workloadMemory;
-    }
-
-    public void setWorkloadMemory(double workloadMemory) {
-        this.workloadMemory = workloadMemory;
-    }
-
-    public double getWorkloadBandwidth() {
-        return workloadBandwidth;
-    }
-
-    public void setWorkloadBandwidth(double workloadBandwidth) {
-        this.workloadBandwidth = workloadBandwidth;
+    private double getWorkloadBandwidth() {
+        return RandomNumber.nextGaussian(30, 10) * getCurrentNumberOfJobs();
     }
 }

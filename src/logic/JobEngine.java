@@ -53,40 +53,29 @@ public class JobEngine {
                 executor.execute(() -> {
 
                     Job currentJob = new Job();
-                    DataCenter currentDataCenter = dataCenters.get(0);
+                    DataCenter currentDataCenter = grid.getNextBest();
 
                     guiController.plotData();
 
                     try {
-                        for (DataCenter dataCenter : dataCenters) {
-                            if (dataCenter.hasFreePM()) {
-                                dataCenter.setJob(currentJob);
-                                return;
-                            }
-                        }
+                        currentDataCenter.setJob(currentJob);
                     }
                     catch (JobEvent event) {
                         if (event instanceof Failure) {
-                            guiController.addException(event);
 
                             try {
                                 if (currentDataCenter.hasFreePM()) {
                                     currentDataCenter.setJob(currentJob);
-                                    return;
-
                                 } else {
-
                                     new JobTransferLogic(guiController, dataCenters, currentDataCenter, currentJob);
                                 }
                             }
                             catch (JobEvent jobEvent) {
                                 if (jobEvent instanceof Failure) {
                                     guiController.addException(jobEvent);
-                                    System.out.println("second try failed");
 
                                 } else if (jobEvent instanceof Success) {
                                     guiController.addFinished(jobEvent);
-                                    System.out.println("second try success");
                                 }
 
                             } catch (InterruptedException e) {
@@ -105,7 +94,6 @@ public class JobEngine {
         };
     }
 
-    // TODO make this work kk
     public void stop() {
         scheduler.shutdown();
         scheduler = null;
