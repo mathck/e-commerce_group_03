@@ -25,7 +25,8 @@ public class Main extends Application {
     private void initInfrastructure(GUIController guiController) {
         Grid grid = new Grid(Settings.numberOfDataCenters, Settings.gridSize);
 
-        guiController.DrawGrid(grid);
+        guiController.drawGrid(grid);
+        guiController.drawPieCharts();
 
         JobEngine.getInstance().initPeriodicJobProducer(grid, guiController);
     }

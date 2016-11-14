@@ -27,7 +27,7 @@ public class GUIController extends GUIWidgets implements Initializable {
 
     private ArrayList<Integer> latencys = new ArrayList<>();
 
-    void DrawGrid(Grid grid) {
+    void drawGrid(Grid grid) {
 
         INode[][] nodes = grid.getNodes().clone();
         MatrixCalculator.rotateInPlace90DegreesClockwise(nodes);

@@ -38,19 +38,28 @@ class GUIWidgets {
     protected XYChart.Series extensionLineChart = new XYChart.Series();
     protected XYChart.Series bubbleChartGrid = new XYChart.Series();
 
+    protected void drawPieCharts(){
+        ObservableList<PieChart.Data> pieChartDataBaseline =
+                FXCollections.observableArrayList(
+                        new PieChart.Data("Success, 50%", 1),
+                        new PieChart.Data("Failure, 50%", 1));
+
+        ObservableList<PieChart.Data> pieChartDataExtension =
+                FXCollections.observableArrayList(
+                        new PieChart.Data("Success, 50%", 1),
+                        new PieChart.Data("Failure, 50%", 1));
+
+        baselinePieChart.setData(pieChartDataBaseline);
+        extensionPieChart.setData(pieChartDataExtension);
+    }
+
+
     @FXML
     private void handleStartButtonBaselineAction(ActionEvent event) throws InterruptedException {
         startButtonBaseline.setDisable(true);
         stopButtonBaseline.setDisable(false);
         resetButtonBaseline.setDisable(true);
         startButtonExtension.setDisable(true);
-
-        ObservableList<PieChart.Data> pieChartData =
-                FXCollections.observableArrayList(
-                        new PieChart.Data("Success, 50%", 1),
-                        new PieChart.Data("Failure, 50%", 1));
-
-        baselinePieChart.setData(pieChartData);
 
         baselineLineChart.setName("Baseline");
         lineChart.getData().add(baselineLineChart);
@@ -64,13 +73,6 @@ class GUIWidgets {
         stopButtonExtension.setDisable(false);
         resetButtonExtension.setDisable(true);
         startButtonBaseline.setDisable(true);
-
-        ObservableList<PieChart.Data> pieChartData =
-                FXCollections.observableArrayList(
-                        new PieChart.Data("Success, 50%", 1),
-                        new PieChart.Data("Failure, 50%", 1));
-
-        extensionPieChart.setData(pieChartData);
 
         extensionLineChart.setName("Extension");
         lineChart.getData().add(extensionLineChart);
