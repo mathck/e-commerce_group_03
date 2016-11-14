@@ -9,6 +9,7 @@ import model.utility.RandomNumber;
 public class Job {
 
     private int latency = 0;
+    private double additionalFailureRate = 0;
 
     void run() throws JobEvent, InterruptedException {
 
@@ -18,19 +19,28 @@ public class Job {
 
         Thread.sleep(RandomNumber.nextGaussian(10000, 5000));
 
-        if(RandomNumber.nextInt(1, 100) <= Settings.failureRate)
+        if(RandomNumber.nextInt(1, 100) <= calculateTotalFailureRate())
             throw new Failure(this);
         else {
             throw new Success(this);
         }
     }
 
-    void latency(int ms) throws InterruptedException {
+    private int calculateTotalFailureRate() {
+        return (Settings.failureRate + additionalFailureRate / 10) <= Settings.AdditionalFailureThreshold ?
+               (int) (Settings.failureRate + additionalFailureRate / 10) : Settings.AdditionalFailureThreshold;
+    }
+
+    private void latency(int ms) throws InterruptedException {
         Thread.sleep(ms);
         this.latency = 0;
     }
 
     public void addLatency(int latencyms) {
         latency += latencyms;
+    }
+
+    public void setAdditionalFailureRate(double additionalFailureRate) {
+        this.additionalFailureRate = additionalFailureRate;
     }
 }

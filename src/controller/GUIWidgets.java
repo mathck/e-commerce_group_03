@@ -9,7 +9,8 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
-import logic.JobEngine;
+import logic.BaselineJobEngine;
+import logic.ExtendedJobEngine;
 
 class GUIWidgets {
 
@@ -34,11 +35,11 @@ class GUIWidgets {
     @FXML
     protected Button resetButtonExtension;
 
-    protected XYChart.Series baselineLineChart = new XYChart.Series();
-    protected XYChart.Series extensionLineChart = new XYChart.Series();
-    protected XYChart.Series bubbleChartGrid = new XYChart.Series();
+    XYChart.Series baselineLineChart = new XYChart.Series();
+    XYChart.Series extensionLineChart = new XYChart.Series();
+    XYChart.Series bubbleChartGrid = new XYChart.Series();
 
-    protected void drawPieCharts() {
+    void drawPieCharts() {
         ObservableList<PieChart.Data> pieChartDataBaseline =
                 FXCollections.observableArrayList(
                         new PieChart.Data("Success, 50%", 1),
@@ -64,7 +65,7 @@ class GUIWidgets {
         baselineLineChart.setName("Baseline");
         lineChart.getData().add(baselineLineChart);
 
-        JobEngine.getInstance().run();
+        BaselineJobEngine.getInstance().run();
     }
 
     @FXML
@@ -77,7 +78,7 @@ class GUIWidgets {
         extensionLineChart.setName("Extension");
         lineChart.getData().add(extensionLineChart);
 
-        JobEngine.getInstance().run();
+        ExtendedJobEngine.getInstance().run();
     }
 
     @FXML
@@ -113,7 +114,7 @@ class GUIWidgets {
         resetButtonBaseline.setDisable(false);
         startButtonExtension.setDisable(false);
 
-        JobEngine.getInstance().stop();
+        BaselineJobEngine.getInstance().stop();
     }
 
     @FXML
@@ -123,6 +124,6 @@ class GUIWidgets {
         resetButtonExtension.setDisable(false);
         startButtonBaseline.setDisable(false);
 
-        JobEngine.getInstance().stop();
+        ExtendedJobEngine.getInstance().stop();
     }
 }

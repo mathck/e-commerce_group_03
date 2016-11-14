@@ -7,7 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import logic.JobEngine;
+import logic.BaselineJobEngine;
 import model.implementations.Grid;
 
 public class Main extends Application {
@@ -28,7 +28,7 @@ public class Main extends Application {
         guiController.drawGrid(grid);
         guiController.drawPieCharts();
 
-        JobEngine.getInstance().initPeriodicJobProducer(grid, guiController);
+        BaselineJobEngine.getInstance().initPeriodicJobProducer(grid, guiController);
     }
 
     private FXMLLoader setUpGUI(Stage primaryStage) throws java.io.IOException {

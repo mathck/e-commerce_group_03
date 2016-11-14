@@ -20,7 +20,13 @@ public class PhysicalMachine {
     private double utilMemory = RandomNumber.nextGaussian(10);
     private double utilBandwidth = RandomNumber.nextGaussian(10);
 
+    private double additionalFailureRate = 0;
+
+    private boolean isLockedForRestart = false;
+
     PhysicalMachine() {
+
+        isLockedForRestart = false;
         virtualMachines = new ArrayList<>();
 
         int numberOfVirtualMachines = (int) (memory / Settings.memoryPerPM);
@@ -32,23 +38,51 @@ public class PhysicalMachine {
             virtualMachines.add(new VirtualMachine(consumedCPU, consumedMemory, consumedBandwidth));
     }
 
+    public void setLockedForRestart() {
+        this.isLockedForRestart = true;
+    }
+
     boolean setJob(Job job) throws JobEvent, InterruptedException {
-        for (VirtualMachine vm : virtualMachines)
-        {
-            if(!vm.hasJob()) {
-                vm.setJob(job);
-                return true;
+
+        try {
+
+            for (VirtualMachine vm : virtualMachines)
+            {
+                if(!vm.hasJob()) {
+
+                    job.setAdditionalFailureRate(++additionalFailureRate);
+
+                    vm.setJob(job);
+                    return true;
+                }
             }
+
+        }
+        catch (JobEvent | InterruptedException ex) {
+
+            if(isLockedForRestart && getCurrentNumberOfJobs() == 0)
+                this.restart();
+
+            throw ex;
         }
 
         return false;
     }
 
     boolean hasFreeVM() {
+
+        if(isLockedForRestart)
+            return false;
+
         for (VirtualMachine vm : virtualMachines)
             if(!vm.hasJob())
                 return true;
         return false;
+    }
+
+    public void restart() throws InterruptedException {
+        Thread.sleep(Settings.RestartDuration);
+        this.isLockedForRestart = false;
     }
 
     private int getCurrentNumberOfJobs() {
