@@ -22,13 +22,12 @@ abstract class JobEngine {
 
         scheduler.scheduleAtFixedRate(periodicJob, 0, 250, TimeUnit.MILLISECONDS);
         isRunning = true;
-    };
+    }
 
     public void stop() {
         scheduler.shutdown();
         scheduler = null;
         scheduler = Executors.newScheduledThreadPool(1);
         isRunning = false;
-    };
-
+    }
 }
