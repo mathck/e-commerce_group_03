@@ -8,6 +8,14 @@ public class ExtendedJobEngine extends JobEngine {
     @Override
     public void initPeriodicJobProducer(Grid grid, GUIController guiController) {
         // TODO James: implement me
+        // steps:
+        // 1. copy baseline implementation
+        // 2. wenn ein job auf einer physicalMachine failed
+        //      -> physicalMachine.setLockedForRestart()
+        //      -> JobTransferLogic
+        //
+        // ...
+        // whatever wir noch definiert haben für unseren extended algorithmus
     }
 
     private static ExtendedJobEngine instance;
