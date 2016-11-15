@@ -26,8 +26,6 @@ public class BaselineJobEngine extends JobEngine {
                 executor.execute(() -> {
 
                     Job currentJob = new Job();
-                    guiController.increaseTotalCreatedJobs();
-
                     DataCenter currentDataCenter = grid.getNextBest();
 
                     try {

@@ -19,19 +19,24 @@ abstract class JobEngine {
     public void run(GUIController guiController) {
 
         if(isRunning)
-            stop();
+            stop(guiController);
 
         if (this instanceof BaselineJobEngine)
-            guiController.enableBaseline();
+            guiController.enableBaseline(true);
         else if (this instanceof ExtendedJobEngine)
-            guiController.enableExtension();
+            guiController.enableExtension(true);
 
-        scheduler.scheduleAtFixedRate(periodicJob, 0, 50, TimeUnit.MILLISECONDS);
+        scheduler.scheduleAtFixedRate(periodicJob, 0, 5, TimeUnit.MILLISECONDS);
         isRunning = true;
     }
 
-    public void stop() {
+    public void stop(GUIController guiController) {
         isRunning = false;
         scheduler.shutdown();
+
+        if (this instanceof BaselineJobEngine)
+            guiController.enableBaseline(false);
+        else if (this instanceof ExtendedJobEngine)
+            guiController.enableExtension(false);
     }
 }

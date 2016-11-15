@@ -22,7 +22,6 @@ public class GUIController extends GUIWidgets implements Initializable {
 
     private ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
-    private long totalCreatedJobs = 0;
     private boolean baseLineEnabled;
     private boolean extensionEnabled;
 
@@ -85,8 +84,6 @@ public class GUIController extends GUIWidgets implements Initializable {
             extensionSuccesses++;
 
         System.out.println("\u001B[32m" + "SUCCESS: " + success.hashCode() + "\u001B[0m");
-
-        executeEnd();
     }
 
     public void addException(JobEvent failure) {
@@ -97,40 +94,6 @@ public class GUIController extends GUIWidgets implements Initializable {
             extensionFailures++;
 
         System.out.println("\u001B[31m" + "FAILED: " + failure.hashCode() + "\u001B[0m");
-
-        executeEnd();
-    }
-
-    private void executeEnd() {
-
-        System.out.println("S" + baselineSuccesses + "F" + baselineFailures + "T" + totalCreatedJobs);
-
-        if(baseLineEnabled) {
-            if(baselineSuccesses + baselineFailures == totalCreatedJobs) {
-                printEnd();
-            }
-        }
-        else if (extensionEnabled) {
-            if(extensionSuccesses + extensionFailures == totalCreatedJobs) {
-                printEnd();
-            }
-        }
-    }
-
-    private void printEnd() {
-        System.out.println(" --- DONE --- ");
-
-        startButtonBaseline.setDisable(false);
-        startButtonExtension.setDisable(false);
-
-        totalCreatedJobs = 0;
-
-        baseLineEnabled = false;
-        extensionEnabled = false;
-    }
-
-    public void increaseTotalCreatedJobs() {
-        totalCreatedJobs++;
     }
 
     public void addLatency(int latencyms) {
@@ -192,13 +155,11 @@ public class GUIController extends GUIWidgets implements Initializable {
         }
     }
 
-    public void enableBaseline() {
-        this.baseLineEnabled = true;
-        this.extensionEnabled = false;
+    public void enableBaseline(boolean enable) {
+        this.baseLineEnabled = enable;
     }
 
-    public void enableExtension() {
-        this.extensionEnabled = true;
-        this.baseLineEnabled = false;
+    public void enableExtension(boolean enable) {
+        this.extensionEnabled = enable;
     }
 }

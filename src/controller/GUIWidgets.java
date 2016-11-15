@@ -114,7 +114,7 @@ class GUIWidgets {
         resetButtonBaseline.setDisable(false);
         startButtonExtension.setDisable(false);
 
-        BaselineJobEngine.getInstance().stop();
+        BaselineJobEngine.getInstance().stop((GUIController) this);
     }
 
     @FXML
@@ -124,6 +124,6 @@ class GUIWidgets {
         resetButtonExtension.setDisable(false);
         startButtonBaseline.setDisable(false);
 
-        ExtendedJobEngine.getInstance().stop();
+        ExtendedJobEngine.getInstance().stop((GUIController) this);
     }
 }

@@ -13,7 +13,7 @@ public class Job {
     private double additionalFailureRate = 0;
 
     public Job() {
-        jobDuration = RandomNumber.nextGaussian(2000, 0);
+        jobDuration = RandomNumber.nextGaussian(3000, 1000);
     }
 
     void run() throws JobEvent, InterruptedException {

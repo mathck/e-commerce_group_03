@@ -86,6 +86,9 @@ public class PhysicalMachine {
     }
 
     public void restartPM() throws InterruptedException {
+
+        System.out.println("\u001B[30;47m" + "RESTARTING PHYSICAL MACHINE: " + this.hashCode() + "\u001B[0m");
+
         Thread.sleep(Settings.RestartDuration);
         this.isLockedForRestart = false;
     }
