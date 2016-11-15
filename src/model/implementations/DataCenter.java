@@ -21,23 +21,32 @@ public class DataCenter implements INode {
             physicalMachines.add(new PhysicalMachine());
     }
 
-    public PhysicalMachine setJob(Job job) throws JobEvent, InterruptedException {
-        PhysicalMachine currentPM = physicalMachines.get(0);
+    public void setJob(Job job) throws JobEvent, InterruptedException {
         for (PhysicalMachine pm : physicalMachines)
-        {
             if(pm.hasFreeVM()) {
                 pm.setJob(job);
-                currentPM = pm;
-                return currentPM;
+                return;
             }
-        }
-        return currentPM;
     }
 
     public boolean hasFreePM() {
         for (PhysicalMachine pm : physicalMachines)
             if(pm.hasFreeVM())
                 return true;
+
+        return false;
+    }
+
+    public boolean hasFreePM(int amountOfFreePMs) {
+        int freePMCounter = 0;
+
+        for (PhysicalMachine pm : physicalMachines) {
+            if (pm.hasFreeVM())
+                freePMCounter++;
+
+            if (freePMCounter == amountOfFreePMs)
+                return true;
+        }
 
         return false;
     }

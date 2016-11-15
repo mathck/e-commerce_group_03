@@ -18,17 +18,6 @@ public class ExtendedJobEngine extends JobEngine {
 
     @Override
     public void initPeriodicJobProducer(Grid grid, GUIController guiController) {
-        // TODO James: implement me
-        // steps:
-        // 1. copy baseline implementation
-        // 2. wenn ein job auf einer physicalMachine failed
-        //      -> physicalMachine.setLockedForRestart()
-        //      -> JobTransferLogic
-        //
-        // ...
-        // whatever wir noch definiert haben für unseren extended algorithmus
-
-
         ArrayList<DataCenter> dataCenters = new ArrayList<>(grid.getDataCenters());
         ExecutorService executor = Executors.newCachedThreadPool();
         periodicJob = new TimerTask() {
@@ -39,53 +28,66 @@ public class ExtendedJobEngine extends JobEngine {
 
                     Job currentJob = new Job();
                     DataCenter currentDataCenter = grid.getNextBest();
-                    PhysicalMachine currentPM_A = currentDataCenter.getPhysicalMachines().get(0);
-                    PhysicalMachine currentPM_B = currentDataCenter.getPhysicalMachines().get(0);
-                    PhysicalMachine currentPM_C = currentDataCenter.getPhysicalMachines().get(0);
+                    PhysicalMachine currentPM_A = null;
+                    PhysicalMachine currentPM_B = null;
+                    PhysicalMachine currentPM_C = null;
+
+                    int jobCounter = 0;
+                    boolean bFailed = false;
+                    boolean cFailed = false;
 
                     guiController.plotData();
                     guiController.addEnergyUtil(grid.getUtilAverage());
 
                     try {
-                        currentPM_A = currentDataCenter.setJob(currentJob);
+                        currentDataCenter.setJob(currentJob);
                     }
                     catch (JobEvent event) {
                         if (event instanceof Failure) {
 
+                            currentPM_A = event.responsiblePM;
+                            currentPM_A.setLockedForRestart();
+
                             try {
-                                currentPM_A.setLockedForRestart();
-                                if (currentDataCenter.hasFreePM()) {
-                                    currentPM_B = currentDataCenter.setJob(currentJob);
 
-                                    try {
-                                        if (currentDataCenter.hasFreePM()) {
-                                            currentPM_C = currentDataCenter.setJob(currentJob);
-                                        } else {
-                                            new JobTransferLogic(guiController, dataCenters, currentDataCenter, currentJob);
-                                        }
-                                    }
-                                    catch (JobEvent jobjobEvent) {
-                                        if (jobjobEvent instanceof Failure) {
-                                            guiController.addException(jobjobEvent);
+                                if (currentDataCenter.hasFreePM(2)) {
 
-                                        } else if (jobjobEvent instanceof Success) {
-                                            guiController.addFinished(jobjobEvent);
-                                        }
-
-                                    } catch (InterruptedException e) {
-                                        e.printStackTrace();
-                                    }
+                                    currentDataCenter.setJob(currentJob);
+                                    currentDataCenter.setJob(currentJob);
 
                                 } else {
                                     new JobTransferLogic(guiController, dataCenters, currentDataCenter, currentJob);
                                 }
                             }
                             catch (JobEvent jobEvent) {
+
+                                jobCounter++;
+
+                                if(jobCounter == 1)
+                                    currentPM_B = jobEvent.responsiblePM;
+                                else
+                                    currentPM_C = jobEvent.responsiblePM;
+
                                 if (jobEvent instanceof Failure) {
                                     guiController.addException(jobEvent);
 
+                                    if(currentPM_B == jobEvent.responsiblePM)
+                                        bFailed = true;
+
+                                    if(currentPM_C == jobEvent.responsiblePM)
+                                        cFailed = true;
+
                                 } else if (jobEvent instanceof Success) {
                                     guiController.addFinished(jobEvent);
+                                }
+
+                                if(jobCounter == 2) {
+                                    if (!(bFailed && cFailed)) {
+                                        if(bFailed && currentPM_B != null)
+                                            currentPM_B.setLockedForRestart();
+                                        else if(cFailed && currentPM_C != null)
+                                            currentPM_C.setLockedForRestart();
+                                    }
                                 }
 
                             } catch (InterruptedException e) {

@@ -8,8 +8,14 @@ import model.utility.RandomNumber;
 
 public class Job {
 
+    private int jobDuration;
     private int latency = 0;
     private double additionalFailureRate = 0;
+
+
+    public Job() {
+        jobDuration = RandomNumber.nextGaussian(10000, 5000);
+    }
 
     void run() throws JobEvent, InterruptedException {
 
@@ -17,7 +23,7 @@ public class Job {
 
         System.out.println("\u001B[34m" + "started job: " + this.hashCode() + "\u001B[0m");
 
-        Thread.sleep(RandomNumber.nextGaussian(10000, 5000));
+        Thread.sleep(jobDuration);
 
         if(RandomNumber.nextInt(1, 100) <= calculateTotalFailureRate())
             throw new Failure(this);
@@ -27,8 +33,10 @@ public class Job {
     }
 
     private int calculateTotalFailureRate() {
-        return (Settings.failureRate + additionalFailureRate / 10) <= Settings.AdditionalFailureThreshold ?
-               (int) (Settings.failureRate + additionalFailureRate / 10) : Settings.AdditionalFailureThreshold;
+        if ((additionalFailureRate / 10) <= Settings.AdditionalFailureThreshold)
+            return (int) (Settings.failureRate + additionalFailureRate / 10);
+
+        else return Settings.failureRate + Settings.AdditionalFailureThreshold;
     }
 
     private void latency(int ms) throws InterruptedException {

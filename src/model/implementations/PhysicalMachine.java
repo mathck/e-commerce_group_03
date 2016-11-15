@@ -1,6 +1,7 @@
 package model.implementations;
 
 import assets.Settings;
+import model.exceptions.Failure;
 import model.exceptions.JobEvent;
 import model.utility.RandomNumber;
 
@@ -62,6 +63,9 @@ public class PhysicalMachine {
         }
         catch (JobEvent | InterruptedException ex) {
 
+            if(ex instanceof Failure)
+                ((Failure) ex).responsiblePM = this;
+
             if(isLockedForRestart && getCurrentNumberOfJobs() == 0)
                 this.restartPM();
 
@@ -72,7 +76,6 @@ public class PhysicalMachine {
     }
 
     boolean hasFreeVM() {
-
         if(isLockedForRestart)
             return false;
 
@@ -81,8 +84,6 @@ public class PhysicalMachine {
                 return true;
         return false;
     }
-
-
 
     public void restartPM() throws InterruptedException {
         Thread.sleep(Settings.RestartDuration);
