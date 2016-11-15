@@ -16,18 +16,22 @@ abstract class JobEngine {
 
     public abstract void initPeriodicJobProducer(Grid grid, GUIController guiController);
 
-    public void run() {
+    public void run(GUIController guiController) {
+
         if(isRunning)
             stop();
 
-        scheduler.scheduleAtFixedRate(periodicJob, 0, 250, TimeUnit.MILLISECONDS);
+        if (this instanceof BaselineJobEngine)
+            guiController.enableBaseline();
+        else if (this instanceof ExtendedJobEngine)
+            guiController.enableExtension();
+
+        scheduler.scheduleAtFixedRate(periodicJob, 0, 50, TimeUnit.MILLISECONDS);
         isRunning = true;
     }
 
     public void stop() {
-        scheduler.shutdown();
-        scheduler = null;
-        scheduler = Executors.newScheduledThreadPool(1);
         isRunning = false;
+        scheduler.shutdown();
     }
 }

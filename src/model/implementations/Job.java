@@ -12,9 +12,8 @@ public class Job {
     private int latency = 0;
     private double additionalFailureRate = 0;
 
-
     public Job() {
-        jobDuration = RandomNumber.nextGaussian(10000, 5000);
+        jobDuration = RandomNumber.nextGaussian(2000, 0);
     }
 
     void run() throws JobEvent, InterruptedException {

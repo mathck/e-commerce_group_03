@@ -26,10 +26,9 @@ public class ExtendedJobEngine extends JobEngine {
                 executor.execute(() -> {
 
                     Job currentJob = new Job();
-                    DataCenter currentDataCenter = grid.getNextBest();
+                    guiController.increaseTotalCreatedJobs();
 
-                    guiController.plotData();
-                    guiController.addEnergyUtil(grid.getUtilAverage());
+                    DataCenter currentDataCenter = grid.getNextBest();
 
                     try {
                         currentDataCenter.setJob(currentJob);
@@ -93,6 +92,9 @@ public class ExtendedJobEngine extends JobEngine {
                     }
                     catch (InterruptedException ex) {
                         ex.printStackTrace();
+                    }
+                    finally {
+                        guiController.addEnergyUtil(grid.getUtilAverage());
                     }
                 });
             }

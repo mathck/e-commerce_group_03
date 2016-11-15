@@ -65,7 +65,7 @@ class GUIWidgets {
         baselineLineChart.setName("Baseline");
         lineChart.getData().add(baselineLineChart);
 
-        BaselineJobEngine.getInstance().run();
+        BaselineJobEngine.getInstance().run((GUIController) this);
     }
 
     @FXML
@@ -78,7 +78,7 @@ class GUIWidgets {
         extensionLineChart.setName("Extension");
         lineChart.getData().add(extensionLineChart);
 
-        ExtendedJobEngine.getInstance().run();
+        ExtendedJobEngine.getInstance().run((GUIController) this);
     }
 
     @FXML
