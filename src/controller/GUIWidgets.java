@@ -9,6 +9,8 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
 import logic.BaselineJobEngine;
 import logic.ExtendedJobEngine;
 
@@ -34,6 +36,10 @@ class GUIWidgets {
     protected Button stopButtonExtension;
     @FXML
     protected Button resetButtonExtension;
+    @FXML
+    protected Text baselineUtilTextField;
+    @FXML
+    protected Text extensionUtilTextField;
 
     XYChart.Series baselineLineChart = new XYChart.Series();
     XYChart.Series extensionLineChart = new XYChart.Series();

@@ -53,7 +53,7 @@ public class GUIController extends GUIWidgets implements Initializable {
     private ArrayList<Integer> latencys = new ArrayList<>();
 
     private EnergyUtil baselineUtil = new EnergyUtil();
-    private EnergyUtil extendedUtil = new EnergyUtil();
+    private EnergyUtil extensionUtil = new EnergyUtil();
 
     void drawGrid(Grid grid) {
 
@@ -110,11 +110,11 @@ public class GUIController extends GUIWidgets implements Initializable {
             baselineUtil.energyUtilCounter++;
         }
         else if(extensionEnabled) {
-            extendedUtil.energyUtilAverage =
-                    (extendedUtil.energyUtilAverage * extendedUtil.energyUtilCounter + newValue) /
-                            (extendedUtil.energyUtilCounter + 1);
+            extensionUtil.energyUtilAverage =
+                    (extensionUtil.energyUtilAverage * extensionUtil.energyUtilCounter + newValue) /
+                            (extensionUtil.energyUtilCounter + 1);
 
-            extendedUtil.energyUtilCounter++;
+            extensionUtil.energyUtilCounter++;
         }
     }
 
@@ -135,6 +135,9 @@ public class GUIController extends GUIWidgets implements Initializable {
                     }
                 }
             });
+            Platform.runLater(() -> {
+                baselineUtilTextField.setText(Double.toString(Math.round(baselineUtil.energyUtilAverage*100)/100.00));
+            });
         }
         if(extensionEnabled) {
             Platform.runLater(() -> extensionLineChart.getData().add(new XYChart.Data(extensionLineChartXCounter++, extensionSuccesses)));
@@ -151,6 +154,9 @@ public class GUIController extends GUIWidgets implements Initializable {
                         data.setName("Failure, " + extensionFailures);
                     }
                 }
+            });
+            Platform.runLater(() -> {
+                extensionUtilTextField.setText(Double.toString(Math.round(extensionUtil.energyUtilAverage*100)/100.00));
             });
         }
     }

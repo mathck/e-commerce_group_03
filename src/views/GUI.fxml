@@ -190,12 +190,12 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Average Latency:" />
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Energy Consumption:" GridPane.columnIndex="1" />
-                        <Text fx:id="baselineAverageLatency" strokeType="OUTSIDE" strokeWidth="0.0" text="-" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                        <!--<Text strokeType="OUTSIDE" strokeWidth="0.0" text="Average Latency:" />-->
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Energy Utilization:" GridPane.columnIndex="0" />
+                        <!--<Text fx:id="baselineAverageLatency" strokeType="OUTSIDE" strokeWidth="0.0" text="-" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
                         <Text fx:id="extensionAverageLatency" strokeType="OUTSIDE" strokeWidth="0.0" text="-" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
-                        <Text fx:id="baselineEnergyConsumption" strokeType="OUTSIDE" strokeWidth="0.0" text="-" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-                        <Text fx:id="extensionEnergyConsumption" strokeType="OUTSIDE" strokeWidth="0.0" text="-" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+                        --><Text fx:id="baselineUtilTextField" strokeType="OUTSIDE" strokeWidth="0.0" text="-" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                        <Text fx:id="extensionUtilTextField" strokeType="OUTSIDE" strokeWidth="0.0" text="-" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
                      </children>
                      <opaqueInsets>
                         <Insets />
