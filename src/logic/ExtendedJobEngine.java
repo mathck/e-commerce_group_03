@@ -41,7 +41,7 @@ public class ExtendedJobEngine extends JobEngine {
                     DataCenter currentDataCenter = grid.getNextBest();
                     PhysicalMachine currentPM_A = currentDataCenter.getPhysicalMachines().get(0);
                     PhysicalMachine currentPM_B = currentDataCenter.getPhysicalMachines().get(0);
-                    //PhysicalMachine currentPM_C = currentDataCenter.getPhysicalMachines().get(0);
+                    PhysicalMachine currentPM_C = currentDataCenter.getPhysicalMachines().get(0);
 
                     guiController.plotData();
                     guiController.addEnergyUtil(grid.getUtilAverage());
@@ -56,6 +56,26 @@ public class ExtendedJobEngine extends JobEngine {
                                 currentPM_A.setLockedForRestart();
                                 if (currentDataCenter.hasFreePM()) {
                                     currentPM_B = currentDataCenter.setJob(currentJob);
+
+                                    try {
+                                        if (currentDataCenter.hasFreePM()) {
+                                            currentPM_C = currentDataCenter.setJob(currentJob);
+                                        } else {
+                                            new JobTransferLogic(guiController, dataCenters, currentDataCenter, currentJob);
+                                        }
+                                    }
+                                    catch (JobEvent jobjobEvent) {
+                                        if (jobjobEvent instanceof Failure) {
+                                            guiController.addException(jobjobEvent);
+
+                                        } else if (jobjobEvent instanceof Success) {
+                                            guiController.addFinished(jobjobEvent);
+                                        }
+
+                                    } catch (InterruptedException e) {
+                                        e.printStackTrace();
+                                    }
+
                                 } else {
                                     new JobTransferLogic(guiController, dataCenters, currentDataCenter, currentJob);
                                 }
