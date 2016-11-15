@@ -21,6 +21,7 @@ public class VirtualMachine {
         this.consumedCPU = consCPU;
         this.consumedMemory = consMemory;
         this.consumedBandwidth = consBandwidth;
+        this.dateStarted = new Date();
     }
 
     public double getSize() {

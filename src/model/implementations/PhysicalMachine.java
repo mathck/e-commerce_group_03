@@ -24,6 +24,8 @@ public class PhysicalMachine {
 
     private boolean isLockedForRestart = false;
 
+    private VirtualMachine failedVM;
+
     PhysicalMachine() {
 
         isLockedForRestart = false;
@@ -61,7 +63,7 @@ public class PhysicalMachine {
         catch (JobEvent | InterruptedException ex) {
 
             if(isLockedForRestart && getCurrentNumberOfJobs() == 0)
-                this.restart();
+                this.restartPM();
 
             throw ex;
         }
@@ -80,7 +82,9 @@ public class PhysicalMachine {
         return false;
     }
 
-    public void restart() throws InterruptedException {
+
+
+    public void restartPM() throws InterruptedException {
         Thread.sleep(Settings.RestartDuration);
         this.isLockedForRestart = false;
     }

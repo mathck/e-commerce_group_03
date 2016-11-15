@@ -21,14 +21,17 @@ public class DataCenter implements INode {
             physicalMachines.add(new PhysicalMachine());
     }
 
-    public void setJob(Job job) throws JobEvent, InterruptedException {
+    public PhysicalMachine setJob(Job job) throws JobEvent, InterruptedException {
+        PhysicalMachine currentPM = physicalMachines.get(0);
         for (PhysicalMachine pm : physicalMachines)
         {
             if(pm.hasFreeVM()) {
                 pm.setJob(job);
-                return;
+                currentPM = pm;
+                return currentPM;
             }
         }
+        return currentPM;
     }
 
     public boolean hasFreePM() {
@@ -51,6 +54,14 @@ public class DataCenter implements INode {
     @Override
     public String toString() {
         return "1";
+    }
+
+    public List<PhysicalMachine> getPhysicalMachines() {
+        return physicalMachines;
+    }
+
+    public void setPhysicalMachines(List<PhysicalMachine> physicalMachines) {
+        this.physicalMachines = physicalMachines;
     }
 
     public int getLocationX() {
