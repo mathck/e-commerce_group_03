@@ -3,6 +3,7 @@ package logic;
 import controller.GUIController;
 import model.exceptions.Failure;
 import model.exceptions.JobEvent;
+import model.exceptions.NoAvailableDataCenter;
 import model.exceptions.Success;
 import model.implementations.DataCenter;
 import model.implementations.Grid;
@@ -26,9 +27,10 @@ public class BaselineJobEngine extends JobEngine {
                 executor.execute(() -> {
 
                     Job currentJob = new Job();
-                    DataCenter currentDataCenter = grid.getNextBest();
+                    DataCenter currentDataCenter = null;
 
                     try {
+                        currentDataCenter = grid.getNextBest();
                         currentDataCenter.setJob(currentJob);
                     }
                     catch (JobEvent event) {
@@ -59,8 +61,9 @@ public class BaselineJobEngine extends JobEngine {
                     }
                     catch (InterruptedException ex) {
                         ex.printStackTrace();
-                    }
-                    finally {
+                    } catch (NoAvailableDataCenter noAvailableDataCenter) {
+                        System.out.println("No available DataCenter");
+                    } finally {
                         guiController.addEnergyUtil(grid.getUtilAverage());
                     }
                 });

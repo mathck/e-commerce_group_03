@@ -4,6 +4,7 @@ import assets.Settings;
 import javafx.scene.chart.PieChart;
 import javafx.util.Pair;
 import model.calculations.PMCalculation;
+import model.exceptions.NoAvailableDataCenter;
 import model.interfaces.INode;
 import model.utility.RandomNumber;
 
@@ -59,7 +60,7 @@ public class Grid {
         return sum / dataCenterCounter;
     }
 
-    public DataCenter getNextBest() {
+    public DataCenter getNextBest() throws NoAvailableDataCenter {
         DataCenter currentBest = null;
 
         for(DataCenter dataCenter : getDataCenters()) {
@@ -72,7 +73,10 @@ public class Grid {
             }
         }
 
-        return currentBest;
+        if(currentBest == null)
+            throw new NoAvailableDataCenter();
+        else
+            return currentBest;
     }
 
     @Deprecated

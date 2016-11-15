@@ -11,8 +11,8 @@ public class Settings {
     public static final int pMbandwidth = 5000;
     public static final double basicEnergyUtilization = 5;
 
-    public static final int failureRate = 50; // Total out of 100
-    public static int AdditionalFailureThreshold = 50;
+    public static final int failureRate = 30; // Total out of 100
+    public static int AdditionalFailureThreshold = 30;
 
     public static long RestartDuration = 10000;
 }
