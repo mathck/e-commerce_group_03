@@ -24,7 +24,7 @@ public class Main extends Application {
     }
 
     private void initInfrastructure(GUIController guiController) {
-        Grid grid = new Grid(Settings.numberOfDataCenters, Settings.gridSize);
+        Grid grid = new Grid(Settings.numberOfDataCenters, Settings.gridSize); // initialization of the grid
 
         guiController.drawGrid(grid);
         guiController.drawPieCharts();
