@@ -8,6 +8,12 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * The abstract JobEngine describes the similarities between
+ * the different JobEngine implementations
+ * A ScheduledExecutorService is used for the job creation
+ */
+
 abstract class JobEngine {
 
     private ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);

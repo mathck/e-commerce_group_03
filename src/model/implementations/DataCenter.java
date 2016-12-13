@@ -21,6 +21,11 @@ public class DataCenter implements INode {
             physicalMachines.add(new PhysicalMachine());
     }
 
+    /**
+     * assign a job to this data center
+     * @param job will be passed to the next free physical machine
+     * @throws JobEvent job failed or
+     */
     public void setJob(Job job) throws JobEvent, InterruptedException {
         for (PhysicalMachine pm : physicalMachines)
             if(pm.hasFreeVM()) {
@@ -29,6 +34,9 @@ public class DataCenter implements INode {
             }
     }
 
+    /**
+     * Does the dataCenter have a physical machine that has room for 1 more job?
+     */
     public boolean hasFreePM() {
         for (PhysicalMachine pm : physicalMachines)
             if(pm.hasFreeVM())
@@ -37,6 +45,10 @@ public class DataCenter implements INode {
         return false;
     }
 
+    /**
+     * Does the dataCenter have a physical machine that has room for more jobs?
+     * @param amountOfFreePMs amount of required free physical machines
+     */
     public boolean hasFreePM(int amountOfFreePMs) {
         int freePMCounter = 0;
 
@@ -51,7 +63,10 @@ public class DataCenter implements INode {
         return false;
     }
 
-    public int getUtilTotal() {
+    /**
+     * @return total utilization of this data center
+     */
+    int getUtilTotal() {
         int total = 0;
 
         for (PhysicalMachine pm : physicalMachines)
