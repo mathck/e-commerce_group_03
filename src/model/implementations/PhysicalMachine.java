@@ -85,7 +85,7 @@ public class PhysicalMachine {
     Checks, if there is a VM that is currently not operating a job.
      */
     boolean hasFreeVM() {
-        if(isLockedForRestart)
+        if(this.isLockedForRestart)
             return false;
 
         for (VirtualMachine vm : virtualMachines)
@@ -103,6 +103,7 @@ public class PhysicalMachine {
 
         Thread.sleep(Settings.RestartDuration);
         this.isLockedForRestart = false;
+        System.out.println("\u001B[30;42m" + "RESTARTED: " + this.hashCode() + "\u001B[0m");
     }
 
     /*

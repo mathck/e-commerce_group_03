@@ -83,7 +83,7 @@ public class Grid {
                 if (currentBest == null)
                     currentBest = dataCenter;
 
-                if (dataCenter.getUtilTotal() < currentBest.getUtilTotal())
+                if (dataCenter.getUtilTotal() <= currentBest.getUtilTotal())
                     currentBest = dataCenter;
             }
         }
