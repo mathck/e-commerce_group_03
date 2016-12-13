@@ -14,8 +14,8 @@ public class Grid {
     private INode[][] Nodes;
     private int dimension;
 
-    /*
-    Creates a grid and places the DCs on random positions in the grid-matrix.
+    /**
+     * Creates a grid and places the DCs on random positions in the grid-matrix.
      */
     public Grid(int numberDataCenters, int dimension) {
         this.dimension = dimension;
