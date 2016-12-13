@@ -43,6 +43,7 @@ public class PhysicalMachine {
 
     public void setLockedForRestart() {
         this.isLockedForRestart = true;
+        System.out.println("this.isLockedForRestart = true");
     }
 
     /*
