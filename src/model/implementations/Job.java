@@ -16,6 +16,11 @@ public class Job {
         jobDuration = RandomNumber.nextGaussian(3000, 1000);
     }
 
+    /*
+    Runs a job by using a job duration as Thread.sleep timer.
+    The execution of a job fails with a increasing probability.
+    If a job fails, a failure exception is thrown, otherwise, a success exception is thrown.
+     */
     void run() throws JobEvent, InterruptedException {
 
         latency(latency);
@@ -31,6 +36,9 @@ public class Job {
         }
     }
 
+    /*
+    Calculates the total failure rate by adding the general failure rate and the additional failure rate of the PM.
+     */
     private int calculateTotalFailureRate() {
         if ((additionalFailureRate / 10) <= Settings.AdditionalFailureThreshold)
             return (int) (Settings.failureRate + additionalFailureRate / 10);

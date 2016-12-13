@@ -2,6 +2,9 @@ package model.utility;
 
 public class MatrixCalculator {
 
+    /*
+    Takes a matrix and rotates all elements by 90°. This is used to visualize the matrix on the GUI board.
+     */
     public static <T> void rotateInPlace90DegreesClockwise(T[][] matrix) {
         int n = matrix.length;
         int half = n / 2;

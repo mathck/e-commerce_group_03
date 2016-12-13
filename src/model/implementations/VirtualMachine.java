@@ -94,6 +94,10 @@ public class VirtualMachine {
         return job;
     }
 
+
+    /*
+    Executes a job on a VM. If a JobEvent (Success,Failure) or an InterruptedException happens, the exception is rethrown to the physical machine.
+     */
     public void setJob(Job job) throws JobEvent, InterruptedException {
         this.job = job;
 

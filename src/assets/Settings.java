@@ -2,8 +2,8 @@ package assets;
 
 public class Settings { //in this class we set the settings for the algorithm
 
-    public static final int gridSize = 5;
-    public static final int numberOfDataCenters = 10;
+    public static final int gridSize = 15;
+    public static final int numberOfDataCenters = 100;
     public static final int numberOfPhysicalMachinesPerDC = 10;
     public static final int memoryPerPM = 10;
     public static final int pMcpu = 3000;

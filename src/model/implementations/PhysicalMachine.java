@@ -45,6 +45,12 @@ public class PhysicalMachine {
         this.isLockedForRestart = true;
     }
 
+    /*
+    Iterate over all VMs on the PM and check, if a VM is free (has no job) and sets the job. The additional failure rate is increased by every new job.
+    When the machine is restarted, the additional failure rate is set to 0.
+    In case of a failure exception, the exception is either rethrown and nothing happens, or the exception is rethrown and the PM is locked for restart.
+    After all jobs on that specific machine are finished, the machine is restarted, if it is locked for restart.
+     */
     boolean setJob(Job job) throws JobEvent, InterruptedException {
 
         try {
@@ -75,6 +81,9 @@ public class PhysicalMachine {
         return false;
     }
 
+    /*
+    Checks, if there is a VM that is currently not operating a job.
+     */
     boolean hasFreeVM() {
         if(isLockedForRestart)
             return false;
@@ -85,6 +94,9 @@ public class PhysicalMachine {
         return false;
     }
 
+    /*
+    Restarts a PM by using a fixed restart duration.
+     */
     public void restartPM() throws InterruptedException {
 
         System.out.println("\u001B[30;47m" + "RESTARTING PHYSICAL MACHINE: " + this.hashCode() + "\u001B[0m");
@@ -93,6 +105,9 @@ public class PhysicalMachine {
         this.isLockedForRestart = false;
     }
 
+    /*
+    Counts the jobs operated by the VMs of a PM.
+     */
     private int getCurrentNumberOfJobs() {
         int jobCounter = 0;
         for (VirtualMachine vm : virtualMachines)
@@ -101,6 +116,9 @@ public class PhysicalMachine {
         return jobCounter;
     }
 
+    /*
+    Calculates the total utilization of the PM.
+     */
     public double getUtilTotal() {
         return  utilIdle +
                 getWorkloadCPU() * utilCPU +
