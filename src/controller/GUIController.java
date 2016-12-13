@@ -102,19 +102,17 @@ public class GUIController extends GUIWidgets implements Initializable {
 
     public void addEnergyUtil(double newValue) {
 
-        if(baseLineEnabled) {
+        if (baseLineEnabled) {
+
             baselineUtil.energyUtilAverage =
-                    (baselineUtil.energyUtilAverage * baselineUtil.energyUtilCounter + newValue) /
-                    (baselineUtil.energyUtilCounter + 1);
+                    ((baselineUtil.energyUtilAverage * baselineUtil.energyUtilCounter)
+                            + newValue) / (++baselineUtil.energyUtilCounter);
 
-            baselineUtil.energyUtilCounter++;
         }
-        else if(extensionEnabled) {
+        else if (extensionEnabled) {
             extensionUtil.energyUtilAverage =
-                    (extensionUtil.energyUtilAverage * extensionUtil.energyUtilCounter + newValue) /
-                            (extensionUtil.energyUtilCounter + 1);
-
-            extensionUtil.energyUtilCounter++;
+                    ((extensionUtil.energyUtilAverage * extensionUtil.energyUtilCounter)
+                            + newValue) / (++extensionUtil.energyUtilCounter);
         }
     }
 
