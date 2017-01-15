@@ -8,7 +8,7 @@ public class Settings {
 
     public static final int gridSize = 15;
     public static final int numberOfDataCenters = 100;
-    public static final int numberOfPhysicalMachinesPerDC = 1000;
+    public static final int numberOfPhysicalMachinesPerDC = 100;
     public static final int memoryPerPM = 10;
     public static final int pMcpu = 3000;
     public static final int pMmemory = 5000;
