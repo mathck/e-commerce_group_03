@@ -88,10 +88,12 @@ public class ExtendedJobEngine extends JobEngine {
 
                                     if (secondJobEvent instanceof Failure) {
                                         guiController.addException(secondJobEvent);
+                                        return;
                                     }
 
                                     if(jobEvent instanceof Success || secondJobEvent instanceof Success) {
                                         guiController.addFinished(jobEvent instanceof Success ? jobEvent : secondJobEvent);
+                                        return;
                                     }
 
                                     if(jobEvent instanceof Failure && secondJobEvent instanceof Failure) {
@@ -114,6 +116,7 @@ public class ExtendedJobEngine extends JobEngine {
 
                         } else if (event instanceof Success) {
                             guiController.addFinished(event);
+                            return;
                         }
                     }
                     catch (InterruptedException ex) {

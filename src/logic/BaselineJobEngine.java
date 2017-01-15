@@ -63,9 +63,11 @@ public class BaselineJobEngine extends JobEngine {
                             catch (JobEvent jobEvent) {
                                 if (jobEvent instanceof Failure) {
                                     guiController.addException(jobEvent);
+                                    return;
 
                                 } else if (jobEvent instanceof Success) {
                                     guiController.addFinished(jobEvent);
+                                    return;
                                 }
 
                             } catch (InterruptedException e) {
@@ -74,6 +76,7 @@ public class BaselineJobEngine extends JobEngine {
 
                         } else if (event instanceof Success) {
                             guiController.addFinished(event);
+                            return;
                         }
                     }
                     catch (InterruptedException ex) {
