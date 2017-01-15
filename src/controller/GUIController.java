@@ -1,7 +1,6 @@
 package controller;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.TimerTask;
 import java.util.concurrent.Executors;
@@ -15,6 +14,7 @@ import model.exceptions.JobEvent;
 import model.implementations.DataCenter;
 import model.implementations.EnergyUtil;
 import model.implementations.Grid;
+import model.implementations.LatencyPerformance;
 import model.interfaces.INode;
 import model.utility.MatrixCalculator;
 
@@ -50,10 +50,11 @@ public class GUIController extends GUIWidgets implements Initializable {
     private int baselineLineChartXCounter = 0;
     private int extensionLineChartXCounter = 0;
 
-    private ArrayList<Integer> latencys = new ArrayList<>();
-
     private EnergyUtil baselineUtil = new EnergyUtil();
     private EnergyUtil extensionUtil = new EnergyUtil();
+
+    private LatencyPerformance baselineLatency = new LatencyPerformance();
+    private LatencyPerformance extensionLatency = new LatencyPerformance();
 
     void drawGrid(Grid grid) {
 
@@ -97,22 +98,33 @@ public class GUIController extends GUIWidgets implements Initializable {
     }
 
     public void addLatency(int latencyms) {
-        latencys.add(latencyms);
+        if (baseLineEnabled) {
+
+            baselineLatency.average =
+                    ((baselineLatency.average * baselineLatency.counter)
+                            + latencyms) / (++baselineLatency.counter);
+
+        }
+        else if (extensionEnabled) {
+            extensionLatency.average =
+                    ((extensionLatency.average * extensionLatency.counter)
+                            + latencyms) / (++extensionLatency.counter);
+        }
     }
 
     public void addEnergyUtil(double newValue) {
 
         if (baseLineEnabled) {
 
-            baselineUtil.energyUtilAverage =
-                    ((baselineUtil.energyUtilAverage * baselineUtil.energyUtilCounter)
-                            + newValue) / (++baselineUtil.energyUtilCounter);
+            baselineUtil.average =
+                    ((baselineUtil.average * baselineUtil.counter)
+                            + newValue) / (++baselineUtil.counter);
 
         }
         else if (extensionEnabled) {
-            extensionUtil.energyUtilAverage =
-                    ((extensionUtil.energyUtilAverage * extensionUtil.energyUtilCounter)
-                            + newValue) / (++extensionUtil.energyUtilCounter);
+            extensionUtil.average =
+                    ((extensionUtil.average * extensionUtil.counter)
+                            + newValue) / (++extensionUtil.counter);
         }
     }
 
@@ -134,7 +146,8 @@ public class GUIController extends GUIWidgets implements Initializable {
                 }
             });
             Platform.runLater(() -> {
-                baselineUtilTextField.setText(Double.toString(Math.round(baselineUtil.energyUtilAverage*100)/100.00));
+                baselineUtilTextField.setText(Double.toString(Math.round(baselineUtil.average *100)/100.00));
+                baselineLatencyTextField.setText(Double.toString(Math.round(baselineLatency.average *100)/100.00));
             });
         }
         if(extensionEnabled) {
@@ -154,7 +167,8 @@ public class GUIController extends GUIWidgets implements Initializable {
                 }
             });
             Platform.runLater(() -> {
-                extensionUtilTextField.setText(Double.toString(Math.round(extensionUtil.energyUtilAverage*100)/100.00));
+                extensionUtilTextField.setText(Double.toString(Math.round(extensionUtil.average *100)/100.00));
+                extensionLatencyTextField.setText(Double.toString(Math.round(extensionLatency.average *100)/100.00));
             });
         }
     }

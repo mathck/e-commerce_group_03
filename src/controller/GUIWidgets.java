@@ -39,6 +39,10 @@ class GUIWidgets {
     protected Text baselineUtilTextField;
     @FXML
     protected Text extensionUtilTextField;
+    @FXML
+    protected Text baselineLatencyTextField;
+    @FXML
+    protected Text extensionLatencyTextField;
 
     XYChart.Series baselineLineChart = new XYChart.Series();
     XYChart.Series extensionLineChart = new XYChart.Series();

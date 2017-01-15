@@ -32,7 +32,7 @@ public class PhysicalMachine {
         isLockedForRestart = false;
         virtualMachines = new ArrayList<>();
 
-        int numberOfVirtualMachines = (int) (memory / Settings.memoryPerPM);
+        int numberOfVirtualMachines = 3000;// (int) (memory / Settings.memoryPerPM);
         int consumedCPU = (int) (cpu / numberOfVirtualMachines);
         int consumedMemory = (int) (memory / numberOfVirtualMachines);
         int consumedBandwidth = (int) (bandwidth / numberOfVirtualMachines);

@@ -1,12 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.chart.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.*?>
-<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.chart.BubbleChart?>
 <?import javafx.scene.chart.LineChart?>
@@ -24,7 +17,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane maxWidth="-Infinity" minWidth="-Infinity" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.GUIController">
+<BorderPane maxWidth="-Infinity" minWidth="-Infinity" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.71" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.GUIController">
    <bottom>
       <GridPane BorderPane.alignment="CENTER">
         <columnConstraints>
@@ -125,9 +118,9 @@
       </GridPane>
    </bottom>
    <center>
-      <VBox maxHeight="-Infinity" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="500.0" spacing="15.0">
+      <VBox maxHeight="-Infinity" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="514.0" prefWidth="500.0" spacing="15.0">
          <children>
-            <LineChart fx:id="lineChart" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" prefHeight="250.0" title="Completed Tasks">
+            <LineChart fx:id="lineChart" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" prefHeight="218.0" prefWidth="500.0" title="Completed Tasks">
               <xAxis>
                  <NumberAxis />
               </xAxis>
@@ -136,9 +129,9 @@
               </yAxis>
             </LineChart>
             <Line endX="400.0" startX="-100.0" />
-            <HBox minHeight="-Infinity" prefHeight="250.0" prefWidth="200.0">
+            <HBox minHeight="-Infinity" prefHeight="291.0" prefWidth="500.0">
                <children>
-                  <PieChart fx:id="baselinePieChart" labelLineLength="10.0" labelsVisible="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="250.0" minWidth="250.0" prefHeight="250.0" prefWidth="250.0" startAngle="90.0" title="Baseline Performance" />
+                  <PieChart fx:id="baselinePieChart" labelLineLength="10.0" labelsVisible="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="250.0" minWidth="250.0" prefHeight="260.0" prefWidth="250.0" startAngle="90.0" title="Baseline Performance" />
                   <PieChart fx:id="extensionPieChart" labelLineLength="10.0" labelsVisible="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="250.0" minWidth="250.0" prefHeight="250.0" prefWidth="250.0" startAngle="90.0" title="Extension Performance" />
                </children>
             </HBox>
@@ -166,8 +159,8 @@
                <children>
                   <GridPane>
                     <columnConstraints>
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="95.0" minWidth="10.0" prefWidth="71.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="129.0" minWidth="10.0" prefWidth="129.0" />
                     </columnConstraints>
                     <rowConstraints>
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -191,11 +184,14 @@
                     </rowConstraints>
                      <children>
                         <!--<Text strokeType="OUTSIDE" strokeWidth="0.0" text="Average Latency:" />-->
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Energy Utilization:" GridPane.columnIndex="0" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Energy Util." GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
                         <!--<Text fx:id="baselineAverageLatency" strokeType="OUTSIDE" strokeWidth="0.0" text="-" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
                         <Text fx:id="extensionAverageLatency" strokeType="OUTSIDE" strokeWidth="0.0" text="-" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
                         --><Text fx:id="baselineUtilTextField" strokeType="OUTSIDE" strokeWidth="0.0" text="-" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
                         <Text fx:id="extensionUtilTextField" strokeType="OUTSIDE" strokeWidth="0.0" text="-" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+                        <Text fx:id="baselineLatencyTextField" layoutX="51.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                        <Text fx:id="extensionLatencyTextField" layoutX="100.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+                        <Text layoutX="10.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Latency" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
                      </children>
                      <opaqueInsets>
                         <Insets />
