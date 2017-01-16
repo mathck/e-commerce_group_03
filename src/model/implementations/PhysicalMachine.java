@@ -107,6 +107,8 @@ public class PhysicalMachine {
         Thread.sleep(Settings.RestartDuration);
         this.isLockedForRestart = false;
         System.out.println("\u001B[30;42m" + "RESTARTED: " + this.hashCode() + "\u001B[0m");
+
+        this.additionalFailureRate = 0;
     }
 
     /*

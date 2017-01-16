@@ -40,7 +40,7 @@ public class Job {
     Calculates the total failure rate by adding the general failure rate and the additional failure rate of the PM.
      */
     private int calculateTotalFailureRate() {
-        if ((additionalFailureRate / 10) <= Settings.AdditionalFailureThreshold)
+        if ((additionalFailureRate) <= Settings.AdditionalFailureThreshold)
             return (int) (Settings.failureRate + additionalFailureRate / 10);
 
         else return Settings.failureRate + Settings.AdditionalFailureThreshold;
