@@ -41,6 +41,6 @@ public class PMCalculation {
      * Formula Bandwidth
      */
     public static int getBandwidth(DataCenter dataCenter1, DataCenter dataCenter2) {
-        return Math.abs((dataCenter1.hashCode() + dataCenter2.hashCode()) / 1000000);
+        return Math.abs((dataCenter1.hashCode() + dataCenter2.hashCode()) / 10000000);
     }
 }

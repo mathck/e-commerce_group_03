@@ -85,8 +85,10 @@ public class GUIController extends GUIWidgets implements Initializable {
             extensionSuccesses++;
 
         System.out.println("\u001B[32m" + "SUCCESS: " + success.hashCode() + "\u001B[0m");
-        int sum = baselineSuccesses+baselineFailures;
-        System.out.println("SUM BL: " + sum);
+        int sumbl = baselineSuccesses+baselineFailures;
+        System.out.println("SUM BL: " + sumbl);
+        int sumex = extensionSuccesses+extensionFailures;
+        System.out.println("SUM EX: " + sumex);
     }
 
     public void addException(JobEvent failure) {
@@ -98,8 +100,10 @@ public class GUIController extends GUIWidgets implements Initializable {
 
         System.out.println("\u001B[31m" + "FAILED: " + failure.hashCode() + "\u001B[0m");
 
-        int sum = extensionSuccesses+extensionFailures;
-        System.out.println("SUM EX: " + sum);
+        int sumbl = baselineSuccesses+baselineFailures;
+        System.out.println("SUM BL: " + sumbl);
+        int sumex = extensionSuccesses+extensionFailures;
+        System.out.println("SUM EX: " + sumex);
     }
 
     public void addLatency(int latencyms) {
